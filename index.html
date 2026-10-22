@@ -2,123 +2,243 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Sireus</title>
-  <meta name="description" content="Sireus — создаём цифровые продукты, которые приятно использовать.">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <meta name="description" content="Sireus — студия, которая проектирует и делает сайты, интерфейсы и веб-приложения.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="header">
-    <div class="container header__inner">
-      <a href="#top" class="logo">Sireus<span>.</span></a>
-      <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav">
-        <a href="#about">О нас</a>
+    <div class="wrap header__inner">
+      <a href="#top" class="logo" aria-label="Sireus, на главную">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1 13.6 10.4 23 12 13.6 13.6 12 23 10.4 13.6 1 12 10.4 10.4Z"/></svg>
+        Sireus
+      </a>
+      <nav class="nav" id="nav">
         <a href="#services">Услуги</a>
-        <a href="#work">Как работаем</a>
-        <a href="#contact" class="btn btn--small">Связаться</a>
+        <a href="#projects">Проекты</a>
+        <a href="#process">Процесс</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#contact" class="nav__cta">Написать нам</a>
       </nav>
+      <div class="header__tools">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Сменить тему">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+        </button>
+        <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span>
+        </button>
+      </div>
     </div>
   </header>
 
   <main id="top">
     <section class="hero">
-      <div class="container hero__inner">
-        <p class="eyebrow">Цифровая студия</p>
-        <h1>Создаём продукты,<br>которые <span class="accent">приятно</span> использовать</h1>
-        <p class="lead">Sireus помогает идеям стать сайтами, приложениями и сервисами — от первого наброска до запуска и поддержки.</p>
-        <div class="hero__actions">
-          <a href="#contact" class="btn">Обсудить проект</a>
-          <a href="#services" class="btn btn--ghost">Что мы делаем</a>
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <p class="label">Студия цифровых продуктов</p>
+          <h1>Ярче остальных — <em>и по делу</em></h1>
+          <p class="lead">Проектируем и делаем сайты, интерфейсы и веб-приложения. Ведём проект от первой встречи до запуска, а потом помогаем ему расти.</p>
+          <div class="hero__actions">
+            <a href="#contact" class="btn">Обсудить проект</a>
+            <a href="#projects" class="btn btn--line">Посмотреть работы</a>
+          </div>
+          <dl class="facts">
+            <div><dt>Проектов</dt><dd>50+</dd></div>
+            <div><dt>Лет работы</dt><dd>5</dd></div>
+            <div><dt>Ответ на заявку</dt><dd>&lt; 24 ч</dd></div>
+          </dl>
         </div>
+        <figure class="chart">
+          <canvas id="sky" aria-label="Карта созвездия Большой Пёс с выделенной звездой Сириус" role="img"></canvas>
+          <figcaption class="chart__caption">
+            <span>α CMa · Сириус</span>
+            <span>RA 06ʰ45ᵐ09ˢ · Dec −16°42′58″</span>
+            <span>m = −1,46 · 8,6 св. лет</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
 
-    <section id="about" class="section">
-      <div class="container about">
-        <div>
-          <h2>О нас</h2>
-          <p>Мы — небольшая команда дизайнеров и разработчиков. Нам важны простота, скорость и внимание к деталям. Каждый проект ведём лично: без лишних посредников и бюрократии.</p>
+    <section id="services" class="section">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="label">Услуги</p>
+          <h2>Что мы делаем</h2>
         </div>
-        <ul class="stats">
-          <li><strong data-count="50">0</strong><span>проектов</span></li>
-          <li><strong data-count="5">0</strong><span>лет опыта</span></li>
-          <li><strong data-count="98">0</strong><span>% довольных клиентов</span></li>
+        <ul class="services">
+          <li>
+            <h3>Сайты</h3>
+            <p>Лендинги, корпоративные сайты и магазины. Быстрая загрузка, понятная структура, удобная админка.</p>
+            <span class="meta">2–6 недель</span>
+          </li>
+          <li>
+            <h3>Дизайн интерфейсов</h3>
+            <p>Исследование, прототипы и дизайн-системы. Сначала проверяем идею, потом рисуем экраны.</p>
+            <span class="meta">1–4 недели</span>
+          </li>
+          <li>
+            <h3>Веб-приложения</h3>
+            <p>Личные кабинеты, CRM, внутренние сервисы. Начинаем с MVP и развиваем по данным.</p>
+            <span class="meta">от 6 недель</span>
+          </li>
+          <li>
+            <h3>Поддержка и рост</h3>
+            <p>Доработки, аналитика, ускорение и мониторинг. Отвечаем за то, чтобы всё работало.</p>
+            <span class="meta">помесячно</span>
+          </li>
         </ul>
       </div>
     </section>
 
-    <section id="services" class="section section--alt">
-      <div class="container">
-        <h2>Услуги</h2>
-        <div class="cards">
-          <article class="card">
-            <div class="card__icon">◆</div>
-            <h3>Сайты</h3>
-            <p>Лендинги, корпоративные сайты и интернет-магазины с быстрой загрузкой и адаптивной вёрсткой.</p>
+    <section id="projects" class="section section--tint">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="label">Проекты</p>
+          <h2>Примеры работ</h2>
+          <p class="section__note">Демонстрационные проекты: показывают, какие задачи мы берём.</p>
+        </div>
+        <div class="projects">
+          <article class="project">
+            <div class="project__visual project__visual--a" aria-hidden="true">
+              <div class="mock"><i></i><i></i><i></i><b></b></div>
+            </div>
+            <div class="project__body">
+              <h3>Онлайн-запись в клинику</h3>
+              <p>Запись к врачу за три шага вместо звонка в регистратуру.</p>
+              <ul class="tags"><li>Веб-приложение</li><li>UX</li></ul>
+            </div>
           </article>
-          <article class="card">
-            <div class="card__icon">◇</div>
-            <h3>Дизайн</h3>
-            <p>Интерфейсы, айдентика и прототипы. Делаем красиво, но прежде всего — понятно.</p>
+          <article class="project">
+            <div class="project__visual project__visual--b" aria-hidden="true">
+              <div class="mock mock--grid"><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="project__body">
+              <h3>Магазин керамики</h3>
+              <p>Каталог, корзина и оплата для небольшой мастерской.</p>
+              <ul class="tags"><li>Сайт</li><li>E-commerce</li></ul>
+            </div>
           </article>
-          <article class="card">
-            <div class="card__icon">◈</div>
-            <h3>Приложения</h3>
-            <p>Веб- и мобильные приложения: от MVP до полноценного продукта.</p>
-          </article>
-          <article class="card">
-            <div class="card__icon">◎</div>
-            <h3>Поддержка</h3>
-            <p>Обновления, доработки и мониторинг, чтобы всё работало стабильно.</p>
+          <article class="project">
+            <div class="project__visual project__visual--c" aria-hidden="true">
+              <div class="mock mock--bars"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <div class="project__body">
+              <h3>Панель для логистики</h3>
+              <p>Статусы доставок и отчёты в одном окне для диспетчеров.</p>
+              <ul class="tags"><li>Дашборд</li><li>B2B</li></ul>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="work" class="section">
-      <div class="container">
-        <h2>Как работаем</h2>
+    <section id="process" class="section">
+      <div class="wrap">
+        <div class="section__head">
+          <p class="label">Процесс</p>
+          <h2>Как идёт работа</h2>
+        </div>
         <ol class="steps">
-          <li><span>01</span><h3>Знакомство</h3><p>Обсуждаем задачу, цели и сроки.</p></li>
-          <li><span>02</span><h3>План</h3><p>Готовим структуру, смету и прототип.</p></li>
-          <li><span>03</span><h3>Создание</h3><p>Дизайн и разработка с регулярными демо.</p></li>
-          <li><span>04</span><h3>Запуск</h3><p>Публикуем, проверяем и остаёмся на связи.</p></li>
+          <li>
+            <h3>Знакомство</h3>
+            <p>Созваниваемся, разбираем задачу и цели. Бесплатно.</p>
+            <span class="meta">1–2 дня</span>
+          </li>
+          <li>
+            <h3>План и смета</h3>
+            <p>Структура, сроки, стоимость. Фиксируем всё в договоре.</p>
+            <span class="meta">3–5 дней</span>
+          </li>
+          <li>
+            <h3>Дизайн и разработка</h3>
+            <p>Показываем результат каждую неделю, правки вносим сразу.</p>
+            <span class="meta">по плану</span>
+          </li>
+          <li>
+            <h3>Запуск</h3>
+            <p>Публикуем, проверяем, обучаем вашу команду.</p>
+            <span class="meta">+ месяц гарантии</span>
+          </li>
         </ol>
       </div>
     </section>
 
-    <section id="contact" class="section section--alt">
-      <div class="container contact">
-        <div>
-          <h2>Связаться</h2>
-          <p>Расскажите о проекте — ответим в течение одного рабочего дня.</p>
+    <section id="faq" class="section section--tint">
+      <div class="wrap faq">
+        <div class="section__head">
+          <p class="label">Вопросы</p>
+          <h2>Частые вопросы</h2>
         </div>
-        <form class="form" novalidate>
-          <label>Имя
-            <input type="text" name="name" required>
-          </label>
-          <label>Email
-            <input type="email" name="email" required>
-          </label>
-          <label>Сообщение
-            <textarea name="message" rows="4" required></textarea>
-          </label>
-          <button type="submit" class="btn">Отправить</button>
-          <p class="form__status" role="status"></p>
+        <div class="faq__list">
+          <details open>
+            <summary>Сколько стоит сайт?</summary>
+            <p>Зависит от объёма. После первого созвона присылаем смету с разбивкой по этапам, чтобы было видно, за что вы платите.</p>
+          </details>
+          <details>
+            <summary>У меня есть только идея. Это нормально?</summary>
+            <p>Да. Мы поможем сформулировать задачу, собрать структуру и понять, что нужно сделать в первую очередь.</p>
+          </details>
+          <details>
+            <summary>Можно ли доработать уже существующий сайт?</summary>
+            <p>Можно. Сначала проводим аудит: смотрим скорость, удобство и код, затем предлагаем план улучшений.</p>
+          </details>
+          <details>
+            <summary>Что будет после запуска?</summary>
+            <p>Месяц гарантийной поддержки входит в стоимость. Дальше — по желанию, помесячно.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="wrap contact">
+        <div class="contact__intro">
+          <p class="label">Контакты</p>
+          <h2>Расскажите о проекте</h2>
+          <p>Ответим в течение одного рабочего дня. Можно написать напрямую:</p>
+          <div class="copy">
+            <span id="email">hello@sireus.studio</span>
+            <button type="button" class="copy__btn" id="copy-email">Скопировать</button>
+          </div>
+        </div>
+        <form class="form" id="contact-form" novalidate>
+          <div class="form__row">
+            <label for="f-name">Имя</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="form__row">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <fieldset class="form__row">
+            <legend>Что нужно</legend>
+            <div class="chips">
+              <label><input type="checkbox" name="type" value="site" id="f-site"><span>Сайт</span></label>
+              <label><input type="checkbox" name="type" value="design" id="f-design"><span>Дизайн</span></label>
+              <label><input type="checkbox" name="type" value="app" id="f-app"><span>Приложение</span></label>
+              <label><input type="checkbox" name="type" value="support" id="f-support"><span>Поддержка</span></label>
+            </div>
+          </fieldset>
+          <div class="form__row">
+            <label for="f-message">Пара слов о задаче</label>
+            <textarea id="f-message" name="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn">Отправить заявку</button>
+          <p class="form__status" id="form-status" role="status"></p>
         </form>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container footer__inner">
-      <span>© <span id="year"></span> Sireus</span>
+    <div class="wrap footer__inner">
+      <span>© <span id="year">2026</span> Sireus</span>
+      <span class="meta">Ориентир — самая яркая звезда ночного неба</span>
       <a href="#top">Наверх ↑</a>
     </div>
   </footer>
