@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sireus</title>
+  <meta name="description" content="Sireus — создаём цифровые продукты, которые приятно использовать.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#top" class="logo">Sireus<span>.</span></a>
+      <button class="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a href="#about">О нас</a>
+        <a href="#services">Услуги</a>
+        <a href="#work">Как работаем</a>
+        <a href="#contact" class="btn btn--small">Связаться</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero__inner">
+        <p class="eyebrow">Цифровая студия</p>
+        <h1>Создаём продукты,<br>которые <span class="accent">приятно</span> использовать</h1>
+        <p class="lead">Sireus помогает идеям стать сайтами, приложениями и сервисами — от первого наброска до запуска и поддержки.</p>
+        <div class="hero__actions">
+          <a href="#contact" class="btn">Обсудить проект</a>
+          <a href="#services" class="btn btn--ghost">Что мы делаем</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container about">
+        <div>
+          <h2>О нас</h2>
+          <p>Мы — небольшая команда дизайнеров и разработчиков. Нам важны простота, скорость и внимание к деталям. Каждый проект ведём лично: без лишних посредников и бюрократии.</p>
+        </div>
+        <ul class="stats">
+          <li><strong data-count="50">0</strong><span>проектов</span></li>
+          <li><strong data-count="5">0</strong><span>лет опыта</span></li>
+          <li><strong data-count="98">0</strong><span>% довольных клиентов</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="services" class="section section--alt">
+      <div class="container">
+        <h2>Услуги</h2>
+        <div class="cards">
+          <article class="card">
+            <div class="card__icon">◆</div>
+            <h3>Сайты</h3>
+            <p>Лендинги, корпоративные сайты и интернет-магазины с быстрой загрузкой и адаптивной вёрсткой.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">◇</div>
+            <h3>Дизайн</h3>
+            <p>Интерфейсы, айдентика и прототипы. Делаем красиво, но прежде всего — понятно.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">◈</div>
+            <h3>Приложения</h3>
+            <p>Веб- и мобильные приложения: от MVP до полноценного продукта.</p>
+          </article>
+          <article class="card">
+            <div class="card__icon">◎</div>
+            <h3>Поддержка</h3>
+            <p>Обновления, доработки и мониторинг, чтобы всё работало стабильно.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="section">
+      <div class="container">
+        <h2>Как работаем</h2>
+        <ol class="steps">
+          <li><span>01</span><h3>Знакомство</h3><p>Обсуждаем задачу, цели и сроки.</p></li>
+          <li><span>02</span><h3>План</h3><p>Готовим структуру, смету и прототип.</p></li>
+          <li><span>03</span><h3>Создание</h3><p>Дизайн и разработка с регулярными демо.</p></li>
+          <li><span>04</span><h3>Запуск</h3><p>Публикуем, проверяем и остаёмся на связи.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="contact" class="section section--alt">
+      <div class="container contact">
+        <div>
+          <h2>Связаться</h2>
+          <p>Расскажите о проекте — ответим в течение одного рабочего дня.</p>
+        </div>
+        <form class="form" novalidate>
+          <label>Имя
+            <input type="text" name="name" required>
+          </label>
+          <label>Email
+            <input type="email" name="email" required>
+          </label>
+          <label>Сообщение
+            <textarea name="message" rows="4" required></textarea>
+          </label>
+          <button type="submit" class="btn">Отправить</button>
+          <p class="form__status" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span>© <span id="year"></span> Sireus</span>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
