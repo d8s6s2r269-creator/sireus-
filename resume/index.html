@@ -8,222 +8,404 @@
 <meta name="description" content="Начинающий UI/UX-дизайнер: навыки, учебные кейсы и контакты.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;500;700&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;500;700;800&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* Layout: the page is a design canvas — each section is a labelled frame on a dot grid, with selection handles and redlines as real UI-design vocabulary */
+/* Layout: one deep-violet night canvas; hero stages floating device mockups, sections are glowing glass panels revealed on scroll */
 :root {
-  --canvas: #eceef2;
-  --frame: #ffffff;
-  --ink: #16181d;
-  --muted: #5d6270;
-  --line: #d5d9e1;
-  --select: #0b84f3;
-  --select-soft: #e3f0fe;
-  --pin: #e2457a;
-  --ok: #138a52;
-  --dot: #c9ced8;
+  --bg: #0c0716;
+  --bg-2: #130a24;
+  --panel: #170e2b;
+  --panel-2: #1f1438;
+  --line: #2e2150;
+  --ink: #f4effe;
+  --muted: #a99bc9;
+  --violet: #8b5cf6;
+  --lilac: #c4a5ff;
+  --magenta: #e879f9;
+  --pink: #f472b6;
+  --ok: #4ade80;
 
   --f-display: "Geologica", "Segoe UI", system-ui, sans-serif;
   --f-body: "Golos Text", "Segoe UI", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
-  --r: 10px;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --canvas: #121317; --frame: #1c1e24; --ink: #eceef3; --muted: #9ba1b0; --line: #2e313a;
-    --select: #4aa8ff; --select-soft: #16304a; --pin: #ff6f9c; --ok: #4fd18f; --dot: #2a2d35;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --canvas: #121317; --frame: #1c1e24; --ink: #eceef3; --muted: #9ba1b0; --line: #2e313a;
-  --select: #4aa8ff; --select-soft: #16304a; --pin: #ff6f9c; --ok: #4fd18f; --dot: #2a2d35;
+  --r: 22px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
   color-scheme: dark;
 }
 
+@property --spin { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; padding: 0; }
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body {
   font: 16.5px/1.6 var(--f-body);
   color: var(--ink);
-  background-color: var(--canvas);
-  background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
-  background-size: 20px 20px;
+  background: var(--bg);
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 body::before {
   content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
-  z-index: 30; background: var(--frame);
+  z-index: 60; background: var(--bg);
 }
+::selection { background: var(--violet); color: #fff; }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--select); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--lilac); outline-offset: 3px; border-radius: 4px; }
 
 .wrap {
-  max-width: 1120px; margin-inline: auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  max-width: 1180px; margin-inline: auto;
+  padding-left: max(18px, env(safe-area-inset-left, 0px));
+  padding-right: max(18px, env(safe-area-inset-right, 0px));
 }
 
-/* Toolbar header */
+/* Ambient background: drifting violet blobs + faint grid */
+.aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
+.aurora i {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55;
+  animation: drift 22s ease-in-out infinite alternate;
+}
+.aurora i:nth-child(1) { width: 52vw; height: 52vw; left: -12vw; top: -18vw; background: #5b21b6; }
+.aurora i:nth-child(2) { width: 40vw; height: 40vw; right: -10vw; top: 10vh; background: #a21caf; opacity: .35; animation-duration: 28s; animation-delay: -6s; }
+.aurora i:nth-child(3) { width: 46vw; height: 46vw; left: 30vw; bottom: -30vw; background: #4c1d95; animation-duration: 32s; animation-delay: -12s; }
+.grid-bg {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(rgb(196 165 255 / .05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(196 165 255 / .05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 75%);
+}
+@keyframes drift {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(8vw, 6vh) scale(1.12); }
+  100% { transform: translate(-6vw, 10vh) scale(.92); }
+}
+
+/* Pointer spotlight */
+.spot {
+  position: fixed; left: 0; top: 0; width: 520px; height: 520px; margin: -260px 0 0 -260px;
+  border-radius: 50%; pointer-events: none; z-index: -1;
+  background: radial-gradient(circle, rgb(139 92 246 / .22), transparent 65%);
+  transform: translate3d(var(--mx, -999px), var(--my, -999px), 0);
+}
+
+/* Scroll progress */
+.progress {
+  position: fixed; left: 0; right: 0; top: env(safe-area-inset-top, 0px); height: 3px; z-index: 70;
+  background: linear-gradient(90deg, var(--violet), var(--magenta), var(--pink));
+  transform-origin: 0 50%; transform: scaleX(var(--p, 0));
+}
+
+/* Header */
 .bar {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-  background: var(--frame); border-bottom: 1px solid var(--line);
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: rgb(12 7 22 / .6);
+  backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid rgb(196 165 255 / .1);
 }
-.bar__in { display: flex; align-items: center; gap: 16px; height: 56px; }
+.bar__in { display: flex; align-items: center; gap: 16px; height: 64px; }
 .bar__name { font: 700 1rem var(--f-display); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-.bar__name i { width: 26px; height: 26px; border-radius: 7px; background: var(--select); display: grid; place-items: center; color: #fff; font-style: normal; font-size: .72rem; }
-.bar nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
-.bar nav::-webkit-scrollbar { display: none; }
+.bar__name i {
+  width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center;
+  font-style: normal; font-size: .72rem; color: #fff;
+  background: linear-gradient(135deg, var(--violet), var(--magenta));
+  box-shadow: 0 0 20px -2px var(--violet);
+}
+.bar nav { display: flex; gap: 2px; margin-left: auto; }
 .bar nav a {
-  font-size: .9rem; font-weight: 500; color: var(--muted); text-decoration: none;
-  padding: 6px 10px; border-radius: 6px; white-space: nowrap;
+  position: relative; font-size: .92rem; font-weight: 500; color: var(--muted); text-decoration: none;
+  padding: 8px 12px; border-radius: 8px; transition: color .25s;
 }
-.bar nav a:hover { background: var(--canvas); color: var(--ink); }
-.theme {
-  flex: none; width: 36px; height: 36px; border-radius: 8px;
-  border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer;
-  display: grid; place-items: center;
+.bar nav a::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 3px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--violet), var(--magenta));
+  transform: scaleX(0); transform-origin: right; transition: transform .35s var(--ease);
 }
-.theme svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.bar nav a:hover { color: var(--ink); }
+.bar nav a:hover::after, .bar nav a.active::after { transform: scaleX(1); transform-origin: left; }
+.bar nav a.active { color: var(--ink); }
+.bar__cta { margin-left: 8px; }
 
-/* Frames */
-main { display: grid; gap: 56px; padding-block: 48px 72px; }
-.frame { position: relative; }
-.frame__label {
-  font: 500 .74rem var(--f-mono); color: var(--muted);
-  display: flex; gap: 8px; align-items: center; margin-bottom: 8px;
+/* Buttons */
+.btn {
+  position: relative; display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  font: 600 1rem var(--f-body); padding: 14px 24px; border-radius: 999px; cursor: pointer;
+  color: #fff; border: 0; isolation: isolate; overflow: hidden;
+  background: linear-gradient(135deg, var(--violet), #a855f7 50%, var(--magenta));
+  box-shadow: 0 10px 30px -10px var(--violet), inset 0 1px 0 rgb(255 255 255 / .25);
+  transform: translate(var(--tx, 0), var(--ty, 0));
+  transition: transform .35s var(--ease), box-shadow .3s;
 }
-.frame__label b { font-weight: 500; color: var(--select); }
-.frame__body {
-  background: var(--frame); border: 1px solid var(--line); border-radius: var(--r);
-  padding: clamp(24px, 4vw, 48px);
-  transition: border-color .15s, box-shadow .15s;
+.btn::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(120deg, transparent 30%, rgb(255 255 255 / .35) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform .7s var(--ease);
 }
-.frame:hover .frame__body { border-color: var(--select); box-shadow: 0 0 0 1px var(--select); }
-
-h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; }
-h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 8px; }
-h3 { font-size: 1.1rem; font-weight: 500; line-height: 1.3; }
-.sub { color: var(--muted); max-width: 40em; margin-bottom: 32px; }
-.mono { font-family: var(--f-mono); font-size: .78rem; color: var(--muted); }
+.btn:hover::before { transform: translateX(120%); }
+.btn:hover { box-shadow: 0 16px 40px -10px var(--magenta), inset 0 1px 0 rgb(255 255 255 / .25); }
+.btn svg { width: 18px; height: 18px; transition: transform .3s var(--ease); }
+.btn:hover svg { transform: translateX(4px); }
+.btn--ghost {
+  background: rgb(255 255 255 / .04); box-shadow: inset 0 0 0 1px var(--line);
+}
+.btn--ghost:hover { background: rgb(139 92 246 / .14); box-shadow: inset 0 0 0 1px var(--violet); }
+.btn--sm { padding: 9px 16px; font-size: .9rem; }
 
 /* Hero */
-.hero { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 48px; align-items: center; }
-.hero__text { display: grid; gap: 22px; min-width: 0; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-block: 72px 56px; }
+.hero__text { display: grid; gap: 24px; min-width: 0; }
 .status {
-  justify-self: start; display: inline-flex; align-items: center; gap: 8px;
-  font-size: .88rem; font-weight: 500; padding: 5px 12px 5px 10px;
-  border-radius: 999px; background: color-mix(in srgb, var(--ok) 14%, transparent); color: var(--ok);
+  justify-self: start; display: inline-flex; align-items: center; gap: 10px;
+  font-size: .9rem; font-weight: 500; padding: 7px 14px 7px 12px; border-radius: 999px;
+  background: rgb(74 222 128 / .1); color: var(--ok); box-shadow: inset 0 0 0 1px rgb(74 222 128 / .25);
 }
-.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 25%, transparent); }
+.status::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor;
+  animation: ping 2s ease-out infinite;
+}
+@keyframes ping { 0% { box-shadow: 0 0 0 0 rgb(74 222 128 / .6); } 100% { box-shadow: 0 0 0 10px rgb(74 222 128 / 0); } }
 
-.selected { position: relative; justify-self: start; padding: 6px 10px; margin: 8px 0 14px -10px; }
-.selected::before { content: ""; position: absolute; inset: 0; border: 1.5px solid var(--select); pointer-events: none; }
-.selected .h {
-  position: absolute; width: 9px; height: 9px; background: var(--frame); border: 1.5px solid var(--select);
+h1 {
+  font: 800 clamp(2.8rem, 7.4vw, 5.6rem)/0.98 var(--f-display); letter-spacing: -0.045em;
+  text-wrap: balance;
 }
-.selected .h:nth-of-type(1) { top: -4px; left: -4px; }
-.selected .h:nth-of-type(2) { top: -4px; right: -4px; }
-.selected .h:nth-of-type(3) { bottom: -4px; left: -4px; }
-.selected .h:nth-of-type(4) { bottom: -4px; right: -4px; }
-.selected .size {
-  position: absolute; left: 50%; bottom: -26px; transform: translateX(-50%);
-  font: 500 .7rem var(--f-mono); color: #fff; background: var(--select);
-  padding: 2px 6px; border-radius: 4px; white-space: nowrap;
+h1 .ch { display: inline-block; animation: rise .9s var(--ease) backwards; animation-delay: calc(var(--i) * 35ms + .1s); }
+@keyframes rise { from { transform: translateY(0.6em) rotate(6deg); opacity: 0; filter: blur(8px); } }
+.grad {
+  background: linear-gradient(100deg, #fff 0%, var(--lilac) 35%, var(--magenta) 60%, var(--violet) 80%, #fff 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: shine 8s linear infinite;
 }
-h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
-.role { font: 300 clamp(1.3rem, 2.4vw, 1.8rem) var(--f-display); letter-spacing: -0.01em; }
-.role strong { font-weight: 500; color: var(--select); }
-.lead { color: var(--muted); font-size: 1.08rem; max-width: 34em; }
-.actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.btn {
-  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
-  font: 600 .98rem var(--f-body); padding: 12px 20px; border-radius: 8px;
-  background: var(--select); color: #fff; border: 1px solid var(--select); cursor: pointer;
-  transition: filter .15s, transform .15s;
-}
-.btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
-.btn--ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-.btn--ghost:hover { border-color: var(--ink); filter: none; }
+@keyframes shine { to { background-position: -250% 0; } }
+.role { font: 300 clamp(1.3rem, 2.6vw, 2rem)/1.2 var(--f-display); letter-spacing: -0.01em; color: var(--muted); }
+.role strong { font-weight: 700; color: var(--ink); }
+.role .typed { color: var(--lilac); font-weight: 500; border-right: 2px solid var(--magenta); padding-right: 3px; animation: caret 1s steps(1) infinite; }
+@keyframes caret { 50% { border-color: transparent; } }
+.lead { color: var(--muted); font-size: 1.1rem; max-width: 33em; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.meta { font: 400 .8rem var(--f-mono); color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.meta span::before { content: "◆ "; color: var(--violet); }
+.fade-in { animation: fadeUp .9s var(--ease) backwards; animation-delay: var(--d, 0s); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } }
 
-.avatar {
-  position: relative; aspect-ratio: 4 / 5; max-width: 100%; border-radius: var(--r);
-  background: var(--select-soft); display: grid; place-items: center; overflow: hidden;
+/* Hero stage with floating devices */
+.stage { position: relative; height: clamp(420px, 46vw, 560px); perspective: 1200px; min-width: 0; }
+.stage__ring {
+  position: absolute; inset: 8% 6%; border-radius: 50%;
+  background: conic-gradient(from var(--spin), var(--violet), var(--magenta), #4c1d95, var(--violet));
+  filter: blur(60px); opacity: .55; animation: spin 14s linear infinite;
 }
-.avatar__initials { font: 700 clamp(4rem, 10vw, 7rem) var(--f-display); color: var(--select); letter-spacing: -0.04em; }
-.avatar__note { position: absolute; left: 12px; right: 12px; bottom: 12px; text-align: center; }
-.pin {
-  position: absolute; top: 16px; right: 16px; max-width: 70%;
-  background: var(--frame); border-radius: 14px 14px 14px 4px; padding: 10px 12px;
-  box-shadow: 0 6px 20px -8px rgb(0 0 0 / .35); font-size: .88rem; line-height: 1.4;
-  display: grid; gap: 2px;
+@keyframes spin { to { --spin: 360deg; } }
+.stage__orbit { position: absolute; inset: 4%; border-radius: 50%; border: 1px dashed rgb(196 165 255 / .2); animation: rot 60s linear infinite; }
+.stage__orbit::after { content: ""; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; border-radius: 50%; background: var(--magenta); box-shadow: 0 0 16px var(--magenta); }
+@keyframes rot { to { transform: rotate(360deg); } }
+.float {
+  position: absolute; width: clamp(150px, 17vw, 220px);
+  transform-style: preserve-3d;
+  transition: transform .6s var(--ease);
 }
-.pin b { font-size: .74rem; color: var(--pin); font-weight: 600; }
+.float .dev { animation: bob 7s ease-in-out infinite; box-shadow: 0 40px 80px -30px rgb(0 0 0 / .8), 0 0 0 1px rgb(196 165 255 / .2); }
+.float.f1 { left: 8%; top: 10%; transform: rotateY(calc(var(--rx, 0) * 1deg + 12deg)) rotateX(calc(var(--ry, 0) * -1deg)) rotateZ(-6deg) translateZ(20px); }
+.float.f2 { right: 6%; top: 18%; transform: rotateY(calc(var(--rx, 0) * 1.6deg - 12deg)) rotateX(calc(var(--ry, 0) * -1.6deg)) rotateZ(5deg) translateZ(60px); }
+.float.f2 .dev { animation-delay: -3.5s; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+.hero .float { animation: popIn 1.2s var(--ease) backwards; }
+.hero .float.f1 { animation-delay: .35s; }
+.hero .float.f2 { animation-delay: .55s; }
+@keyframes popIn { from { opacity: 0; translate: 0 80px; scale: .85; } }
+.tag-f {
+  position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 8px;
+  font: 500 .78rem var(--f-mono); padding: 8px 12px; border-radius: 12px;
+  background: rgb(23 14 43 / .75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgb(196 165 255 / .25), 0 10px 30px -10px #000;
+  animation: bob 6s ease-in-out infinite, fadeUp 1s var(--ease) backwards;
+  translate: calc(var(--rx, 0) * var(--k, 1) * 1px) calc(var(--ry, 0) * var(--k, 1) * 1px);
+  transition: translate .6s var(--ease);
+}
+.tag-f.t1 { left: 0; bottom: 18%; --k: 1.4; animation-delay: -1s, .8s; }
+.tag-f.t2 { right: 0; top: 6%; --k: -1.2; animation-delay: -2s, 1s; }
+.tag-f.t3 { right: 14%; bottom: 4%; --k: 2; animation-delay: -4s, 1.2s; }
+.sw { width: 14px; height: 14px; border-radius: 4px; background: var(--violet); }
+.ic-al { width: 16px; height: 16px; border: 1.5px solid var(--lilac); border-radius: 3px; position: relative; }
+.ic-al::before, .ic-al::after { content: ""; position: absolute; left: 3px; right: 3px; height: 2px; background: var(--lilac); }
+.ic-al::before { top: 3px; } .ic-al::after { bottom: 3px; }
+.cursor-f {
+  position: absolute; left: 44%; top: 62%; z-index: 4; pointer-events: none;
+  animation: wander 9s ease-in-out infinite;
+}
+.cursor-f svg { width: 22px; height: 22px; fill: var(--pink); filter: drop-shadow(0 2px 4px rgb(0 0 0 / .5)); }
+.cursor-f span {
+  display: inline-block; margin: 0 0 0 14px; font: 600 .75rem var(--f-body);
+  padding: 4px 10px; border-radius: 0 10px 10px 10px; background: var(--pink); color: #2a0718;
+}
+@keyframes wander {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-60px, -90px); }
+  50% { transform: translate(40px, -150px); }
+  75% { transform: translate(70px, -30px); }
+}
 
-.redline { display: flex; align-items: center; gap: 8px; color: var(--pin); font: 500 .72rem var(--f-mono); }
-.redline::before, .redline::after { content: ""; height: 1px; flex: 1; background: currentColor; }
+/* Marquee */
+.marquee {
+  border-block: 1px solid var(--line); background: rgb(23 14 43 / .5);
+  overflow: hidden; padding-block: 18px; margin-block: 24px 8px;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee__track { display: flex; width: max-content; animation: marq 40s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee span {
+  font: 700 clamp(1.3rem, 3vw, 2.1rem) var(--f-display); letter-spacing: -0.02em;
+  padding-inline: 22px; white-space: nowrap; display: flex; align-items: center; gap: 44px;
+}
+.marquee span::after { content: "✦"; font-size: .6em; color: var(--magenta); }
+.marquee span:nth-child(even) { -webkit-text-stroke: 1px var(--lilac); color: transparent; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* Sections */
+main { display: grid; gap: 120px; padding-block: 0 100px; overflow-x: clip; }
+.sec__head { display: grid; gap: 14px; margin-bottom: 44px; max-width: 760px; }
+.eyebrow {
+  font: 500 .78rem var(--f-mono); color: var(--lilac); text-transform: uppercase; letter-spacing: .12em;
+  display: flex; align-items: center; gap: 12px;
+}
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: linear-gradient(90deg, var(--violet), var(--magenta)); }
+h2 { font: 800 clamp(2rem, 4.6vw, 3.4rem)/1.04 var(--f-display); letter-spacing: -0.035em; text-wrap: balance; }
+h2 em { font-style: normal; color: transparent; background: linear-gradient(90deg, var(--lilac), var(--magenta)); -webkit-background-clip: text; background-clip: text; }
+h3 { font: 600 1.15rem/1.3 var(--f-display); text-wrap: balance; }
+.sub { color: var(--muted); font-size: 1.05rem; }
+
+/* Reveal: content is visible at rest; JS replays the entrance just before it scrolls in */
+.reveal.play { animation: reveal 1s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 90ms); }
+@keyframes reveal { from { opacity: 0; transform: translateY(50px) scale(.97); filter: blur(6px); } }
+
+/* Glass panel with pointer spotlight */
+.glass {
+  position: relative; border-radius: var(--r);
+  background: linear-gradient(180deg, rgb(255 255 255 / .045), rgb(255 255 255 / .015));
+  box-shadow: inset 0 0 0 1px rgb(196 165 255 / .12);
+  overflow: hidden; isolation: isolate;
+}
+.glass::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(380px circle at var(--x, 50%) var(--y, 50%), rgb(139 92 246 / .25), transparent 60%);
+}
+.glass:hover::before { opacity: 1; }
+.glass::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: radial-gradient(260px circle at var(--x, 50%) var(--y, 50%), var(--magenta), transparent 60%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity .4s;
+}
+.glass:hover::after { opacity: 1; }
+.tilt { transform: perspective(900px) rotateX(var(--tx2, 0deg)) rotateY(var(--ty2, 0deg)); transition: transform .5s var(--ease); }
 
 /* Services */
-.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.svc { border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: grid; gap: 10px; align-content: start; background: var(--frame); }
-.svc__icon { width: 40px; height: 40px; border-radius: 9px; background: var(--select-soft); color: var(--select); display: grid; place-items: center; }
-.svc__icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
-.svc p { color: var(--muted); font-size: .95rem; }
-.svc .mono { margin-top: 4px; }
+.services { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.svc { padding: 28px; display: grid; gap: 12px; align-content: start; }
+.svc__icon {
+  width: 52px; height: 52px; border-radius: 15px; display: grid; place-items: center; margin-bottom: 6px;
+  background: linear-gradient(135deg, rgb(139 92 246 / .3), rgb(232 121 249 / .15));
+  box-shadow: inset 0 0 0 1px rgb(196 165 255 / .3);
+  transition: transform .5s var(--ease);
+}
+.svc:hover .svc__icon { transform: rotate(-8deg) scale(1.08); }
+.svc__icon svg { width: 24px; height: 24px; fill: none; stroke: var(--lilac); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.svc p { color: var(--muted); font-size: .96rem; }
+.svc .time { font: 500 .76rem var(--f-mono); color: var(--lilac); margin-top: 6px; }
 
 /* Skills */
-.skills { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 40px; }
-.skillgroup h3 { margin-bottom: 14px; }
-.levels { list-style: none; display: grid; gap: 2px; }
-.levels li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--line); }
-.lvl { font: 500 .72rem var(--f-mono); padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-.lvl--3 { background: var(--select); color: #fff; }
-.lvl--2 { background: var(--select-soft); color: var(--select); }
-.lvl--1 { border: 1px dashed var(--muted); color: var(--muted); }
-.legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; }
-.legend span { display: flex; align-items: center; gap: 6px; }
-
-.layers { border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
-.layers__head { font: 500 .74rem var(--f-mono); color: var(--muted); padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--canvas); }
-.layers ul { list-style: none; }
-.layers li { display: flex; align-items: center; gap: 10px; padding: 9px 14px; font-size: .95rem; }
-.layers li + li { border-top: 1px solid var(--line); }
-.layers li:hover { background: var(--select-soft); }
-.layers li::before { content: ""; width: 12px; height: 12px; border: 1.5px solid var(--muted); border-radius: 3px; flex: none; }
-.layers li.main::before { background: var(--select); border-color: var(--select); }
-.layers li span { margin-left: auto; }
-
-.soft { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; list-style: none; }
-.soft li { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line); font-size: .9rem; }
+.skills { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; }
+.skills > .glass { padding: 30px; }
+.bars { list-style: none; display: grid; gap: 16px; margin-top: 20px; }
+.bars li { display: grid; gap: 7px; }
+.bars .row { display: flex; justify-content: space-between; gap: 12px; font-size: .96rem; }
+.bars .lv { font: 500 .74rem var(--f-mono); color: var(--muted); white-space: nowrap; }
+.bars .track { height: 8px; border-radius: 99px; background: rgb(196 165 255 / .1); overflow: hidden; }
+.bars .fill {
+  display: block; height: 100%; width: calc(var(--v) * 1%); border-radius: inherit;
+  background: linear-gradient(90deg, var(--violet), var(--magenta));
+  box-shadow: 0 0 12px rgb(232 121 249 / .6);
+  transform-origin: left;
+}
+.bars.play .fill { animation: grow 1.4s var(--ease) backwards; animation-delay: calc(var(--i) * 80ms); }
+@keyframes grow { from { transform: scaleX(0); } }
+.layers { margin-top: 20px; display: grid; gap: 4px; list-style: none; }
+.layers li {
+  display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; font-size: .96rem;
+  transition: background .25s, transform .3s var(--ease);
+}
+.layers li:hover { background: rgb(139 92 246 / .16); transform: translateX(6px); }
+.layers .lg {
+  width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+  font: 700 .72rem var(--f-display); color: #fff; flex: none;
+}
+.layers li span:last-child { margin-left: auto; font: 500 .72rem var(--f-mono); color: var(--muted); }
+.soft { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; list-style: none; }
+.soft li {
+  padding: 7px 14px; border-radius: 999px; font-size: .9rem;
+  box-shadow: inset 0 0 0 1px var(--line); transition: all .3s var(--ease);
+}
+.soft li:hover { box-shadow: inset 0 0 0 1px var(--magenta); color: #fff; background: rgb(232 121 249 / .12); transform: translateY(-3px); }
 
 /* Process */
-.process { list-style: none; counter-reset: s; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-.process li { counter-increment: s; display: grid; gap: 6px; align-content: start; padding-top: 14px; border-top: 2px solid var(--select); }
-.process li::before { content: counter(s); font: 500 .74rem var(--f-mono); color: var(--select); }
-.process p { font-size: .9rem; color: var(--muted); }
+.process { list-style: none; counter-reset: s; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; position: relative; padding-top: 34px; }
+.process::before { content: ""; position: absolute; top: 9px; left: 0; right: 0; height: 2px; background: var(--line); }
+.process::after {
+  content: ""; position: absolute; top: 9px; left: 0; right: 0; height: 2px; transform-origin: left;
+  background: linear-gradient(90deg, var(--violet), var(--magenta), var(--pink));
+  box-shadow: 0 0 14px var(--magenta);
+}
+@supports (animation-timeline: view()) {
+  .process::after { animation: grow linear both; animation-timeline: view(); animation-range: entry 10% cover 45%; }
+}
+.process li { counter-increment: s; display: grid; gap: 6px; align-content: start; position: relative; }
+.process li::before {
+  content: counter(s, decimal-leading-zero); position: absolute; top: -34px; left: 0;
+  width: 20px; height: 20px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 2px var(--violet);
+  font-size: 0; transition: transform .3s var(--ease), background .3s;
+}
+.process li:hover::before { background: var(--magenta); transform: scale(1.3); }
+.process .n { font: 500 .78rem var(--f-mono); color: var(--lilac); }
+.process p { font-size: .92rem; color: var(--muted); }
 
 /* Cases */
 .cases { display: grid; gap: 28px; }
-.case { display: grid; gap: 24px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r); }
+.case { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+.case:nth-child(even) .case__shot { order: 2; }
 .case__shot {
-  border-radius: 8px; padding: clamp(20px, 4vw, 44px) clamp(12px, 3vw, 40px) clamp(14px, 2.5vw, 28px);
-  display: flex; justify-content: center; align-items: flex-end; gap: clamp(12px, 4vw, 48px); overflow: hidden;
+  position: relative; display: flex; justify-content: center; align-items: center; gap: 5%;
+  padding: clamp(28px, 4vw, 48px) clamp(14px, 3vw, 36px); overflow: hidden; min-height: 100%;
+  background:
+    radial-gradient(circle at 20% 15%, rgb(167 139 250 / .55), transparent 50%),
+    radial-gradient(circle at 85% 85%, rgb(232 121 249 / .45), transparent 50%),
+    linear-gradient(160deg, #2a1556, #170b30);
 }
-.shot--food { background: #ffe1c8; }
-.shot--coffee { background: #d6e4da; }
-.shot--habit { background: #e1dcff; }
-.shot { display: grid; gap: 12px; justify-items: center; width: clamp(140px, 30%, 260px); min-width: 0; }
-.shot--wide { width: min(62%, 640px); }
-.shot figcaption { font: 500 .72rem var(--f-mono); color: #3b3f4a; text-align: center; }
-.shot figcaption.cap-old { color: #b42318; }
-.case__text { display: grid; gap: 12px; min-width: 0; padding: 4px 8px 8px; }
-.case__text dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.case__tag { font: 500 .72rem var(--f-mono); color: var(--pin); text-transform: uppercase; letter-spacing: .06em; }
-.case__text dt { font-weight: 600; font-size: .9rem; }
-.case__text dd { color: var(--muted); font-size: .95rem; }
+.case__shot::before {
+  content: ""; position: absolute; inset: 0; opacity: .5;
+  background-image: radial-gradient(rgb(255 255 255 / .18) 1px, transparent 1.2px); background-size: 18px 18px;
+  mask-image: linear-gradient(180deg, #000, transparent);
+}
+.shot--food { --c1: rgb(251 146 60 / .5); }
+.shot { position: relative; display: grid; gap: 12px; justify-items: center; width: clamp(130px, 40%, 240px); min-width: 0; }
+.shot--coffee .shot { width: 29%; }
+.shot--coffee .shot--wide { width: 64%; }
+.shot figcaption { font: 500 .72rem var(--f-mono); color: #e9ddff; text-align: center; }
+.shot figcaption.cap-old { color: #fda4af; }
+.shot .dev, .shot .browser { animation: bob 7s ease-in-out infinite; }
+.shot:nth-child(2) .dev { animation-delay: -3.5s; }
+.shot { transition: transform .6s var(--ease); }
+.case:hover .shot:nth-child(1) { transform: rotate(-3deg) scale(1.03); }
+.case:hover .shot:nth-child(2) { transform: rotate(3deg) scale(1.03); }
+.case__text { display: grid; gap: 14px; align-content: center; padding: clamp(24px, 3.5vw, 40px); min-width: 0; }
+.case__tag { font: 500 .74rem var(--f-mono); color: var(--magenta); text-transform: uppercase; letter-spacing: .08em; }
+.case__text h3 { font-size: clamp(1.25rem, 2.2vw, 1.6rem); font-weight: 700; letter-spacing: -0.02em; }
+.case__text dl { display: grid; gap: 12px; }
+.case__text dt { font: 500 .74rem var(--f-mono); color: var(--lilac); text-transform: uppercase; letter-spacing: .06em; }
+.case__text dd { color: var(--muted); font-size: .96rem; }
 .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
-.tags li { font: .72rem var(--f-mono); padding: 3px 8px; border-radius: 4px; background: var(--canvas); color: var(--muted); }
+.tags li { font: .72rem var(--f-mono); padding: 4px 10px; border-radius: 99px; background: rgb(139 92 246 / .15); color: var(--lilac); }
 
 /* Device frames: screens are designs, so they keep their own fixed palette in both themes */
 .dev {
@@ -378,51 +560,87 @@ h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 700; letter-spacing: -0
 .chk.on { background: var(--v); border-color: var(--v); }
 .chk.on::after { content: ""; position: absolute; left: 32%; top: 18%; width: 25%; height: 45%; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
 
+
+
 /* Education */
-.edu { list-style: none; display: grid; gap: 0; }
-.edu li { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.edu-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 20px; }
+.edu-grid > .glass { padding: 30px; }
+.edu { list-style: none; display: grid; }
+.edu li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .edu li:first-child { padding-top: 0; }
+.edu li:last-child { border-bottom: 0; padding-bottom: 0; }
+.edu .yr { font: 500 .78rem var(--f-mono); color: var(--lilac); }
 .edu p { color: var(--muted); font-size: .95rem; }
-.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
-.facts div { padding: 16px; border-radius: 8px; background: var(--canvas); }
-.facts dt { font: .72rem var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-.facts dd { font: 500 1.05rem var(--f-display); margin-top: 2px; }
+.facts { display: grid; gap: 12px; }
+.facts div { padding: 18px 20px; border-radius: 16px; background: rgb(139 92 246 / .1); box-shadow: inset 0 0 0 1px rgb(196 165 255 / .14); }
+.facts dt { font: 500 .72rem var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+.facts dd { font: 600 1.15rem var(--f-display); margin-top: 2px; }
 
-/* Contacts */
-.contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
-.links { list-style: none; display: grid; gap: 10px; }
-.links li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px; flex-wrap: wrap; }
-.links .k { font: .74rem var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-.links .v { font-weight: 500; user-select: all; word-break: break-all; }
-.links a.v { text-decoration: none; color: var(--select); }
-.copy { font: 500 .74rem var(--f-mono); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
-.copy:hover { border-color: var(--ink); }
-.contact__cta { display: grid; gap: 16px; }
+/* Contact */
+.contact {
+  position: relative; border-radius: 32px; padding: 2px; overflow: hidden;
+  background: conic-gradient(from var(--spin), var(--violet), var(--magenta), var(--pink), #4c1d95, var(--violet));
+  animation: spin 8s linear infinite;
+}
+.contact__in {
+  border-radius: 30px; padding: clamp(28px, 5vw, 64px);
+  background: radial-gradient(circle at 80% 0%, rgb(139 92 246 / .35), transparent 50%), var(--bg-2);
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center;
+}
+.contact h2 { font-size: clamp(2.2rem, 5.4vw, 4rem); }
+.contact__cta { display: grid; gap: 18px; }
 .contact__cta p { color: var(--muted); }
+.links { list-style: none; display: grid; gap: 10px; }
+.links li {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 16px 18px; border-radius: 16px; background: rgb(255 255 255 / .04);
+  box-shadow: inset 0 0 0 1px var(--line); transition: transform .35s var(--ease), box-shadow .3s, background .3s;
+}
+.links li:hover { transform: translateX(-6px); box-shadow: inset 0 0 0 1px var(--violet); background: rgb(139 92 246 / .1); }
+.links .k { font: 500 .72rem var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: .06em; min-width: 70px; }
+.links .v { font-weight: 500; user-select: all; word-break: break-all; flex: 1; }
+.links a.v { text-decoration: none; color: var(--lilac); }
+.copy {
+  font: 500 .74rem var(--f-mono); padding: 6px 10px; border-radius: 8px; border: 0; cursor: pointer;
+  background: rgb(139 92 246 / .2); color: var(--ink); transition: background .2s;
+}
+.copy:hover { background: var(--violet); }
+.copy.done { background: var(--ok); color: #052e14; }
 
-footer { padding-block: 0 40px; text-align: center; }
+footer { padding-block: 0 48px; text-align: center; font: .8rem var(--f-mono); color: var(--muted); }
 
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .spot { display: none; }
+}
 
-@media (max-width: 900px) {
-  .hero, .skills, .contact { grid-template-columns: 1fr; }
-  .avatar { max-width: 360px; aspect-ratio: 1 / 1; }
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; padding-top: 48px; }
+  .stage { height: 440px; max-width: 560px; width: 100%; justify-self: center; }
+  .float { width: 180px; }
   .services { grid-template-columns: 1fr 1fr; }
-  .process { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 24px; }
-  .case__text dl { grid-template-columns: 1fr; gap: 10px; }
+  .skills, .edu-grid, .contact__in { grid-template-columns: 1fr; }
+  .process { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 56px; }
+  .process::before, .process::after { display: none; }
+  .case { grid-template-columns: 1fr; }
+  .case:nth-child(even) .case__shot { order: 0; }
+  .bar nav { display: none; }
+  .bar__cta { margin-left: auto; }
 }
 @media (max-width: 600px) {
-  main { gap: 40px; padding-block: 28px 56px; }
-  .bar nav { display: none; }
-  .bar__in { justify-content: space-between; }
-  .services { grid-template-columns: 1fr; }
-  .process { grid-template-columns: 1fr 1fr; }
+  main { gap: 88px; }
+  .stage { height: 360px; }
+  .float { width: 138px; }
+  .tag-f { font-size: .68rem; padding: 6px 9px; }
+  .services, .process { grid-template-columns: 1fr; }
+  .process li::before { display: none; }
   .edu li { grid-template-columns: 1fr; gap: 4px; }
-  .facts { grid-template-columns: 1fr; }
-  .case { padding: 10px; }
   .shot { width: 46%; }
-  .shot--coffee { flex-wrap: wrap; }
-  .shot--wide { width: 100%; }
+  .shot--coffee { flex-wrap: wrap; row-gap: 22px; }
+  .shot--coffee .shot--wide { width: 100%; }
+  .shot--coffee .shot { width: 52%; }
+  .cursor-f { display: none; }
 }
 </style>
 </head>
@@ -430,173 +648,212 @@ footer { padding-block: 0 40px; text-align: center; }
 
 <!--
   ЗАПОЛНИТЕ СВОИ ДАННЫЕ: имя, инициалы, город, контакты, обучение и ссылки.
-  Все места для замены помечены квадратными скобками [ ... ] или словом "пример".
+  Все места для замены помечены квадратными скобками [ ... ].
 -->
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="spot" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
 
 <header class="bar">
   <div class="wrap bar__in">
     <a href="#top" class="bar__name"><i>ИФ</i>[Имя Фамилия]</a>
     <nav aria-label="Разделы">
-      <a href="#services">Что могу сделать</a>
+      <a href="#services">Услуги</a>
       <a href="#skills">Навыки</a>
+      <a href="#process">Процесс</a>
       <a href="#cases">Кейсы</a>
       <a href="#edu">Обучение</a>
-      <a href="#contact">Контакты</a>
     </nav>
-    <button class="theme" id="theme" type="button" aria-label="Сменить тему">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
-    </button>
+    <a href="#contact" class="btn btn--sm bar__cta magnet">Связаться</a>
   </div>
 </header>
 
-<main id="top" class="wrap">
-
-  <section class="frame" aria-labelledby="hero-title">
-    <div class="frame__label"><b>#</b> Hero · 1440 × auto</div>
-    <div class="frame__body hero">
-      <div class="hero__text">
-        <span class="status">Открыт к стажировке и первым проектам</span>
-        <div class="selected">
-          <h1 id="hero-title">[Имя Фамилия]</h1>
-          <span class="h"></span><span class="h"></span><span class="h"></span><span class="h"></span>
-          <span class="size">Text · Geologica Bold</span>
-        </div>
-        <p class="role">Начинающий <strong>UI/UX-дизайнер</strong></p>
-        <p class="lead">Проектирую понятные интерфейсы для сайтов и мобильных приложений. Начинаю с пользователя и его задачи, а потом делаю так, чтобы было удобно и красиво. Работаю в Figma, быстро учусь и спокойно отношусь к правкам.</p>
-        <div class="actions">
-          <a class="btn" href="#cases">Смотреть кейсы</a>
-          <a class="btn btn--ghost" href="#contact">Связаться</a>
-        </div>
-        <div class="redline" aria-hidden="true">24 px</div>
-        <p class="mono">[Город] · удалённо или в офисе · языки: [русский, английский — уровень]</p>
+<main id="top">
+  <section class="wrap hero" id="hero">
+    <div class="hero__text">
+      <span class="status fade-in" style="--d:.05s">Открыт к стажировке и первым проектам</span>
+      <h1 class="grad" id="name">[Имя Фамилия]</h1>
+      <p class="role fade-in" style="--d:.5s"><strong>UI/UX-дизайнер</strong> · делаю <span class="typed" id="typed">мобильные приложения</span></p>
+      <p class="lead fade-in" style="--d:.65s">Проектирую понятные интерфейсы для сайтов и приложений. Начинаю с пользователя и его задачи, а заканчиваю аккуратным макетом, который удобно передать в разработку.</p>
+      <div class="actions fade-in" style="--d:.8s">
+        <a class="btn magnet" href="#cases">Смотреть кейсы <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn--ghost magnet" href="#contact">Написать мне</a>
       </div>
-      <div class="avatar" aria-label="Место для фотографии">
-        <span class="avatar__initials">ИФ</span>
-        <div class="pin"><b>Комментарий</b>Здесь будет моё фото</div>
-        <p class="avatar__note mono">Photo · 4:5 · заменить</p>
+      <p class="meta fade-in" style="--d:.95s"><span>[Город]</span><span>удалённо или в офисе</span><span>Figma</span></p>
+    </div>
+    <div class="stage" id="stage" aria-label="Макеты экранов из моих кейсов">
+      <div class="stage__ring" aria-hidden="true"></div>
+      <div class="stage__orbit" aria-hidden="true"></div>
+      <div class="float f1" aria-hidden="true"><div class="dev"><div class="scr food">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <div class="f-head">
+                  <div><small>Доставка на</small><strong>ул. Садовая, 12 <span class="caret"></span></strong></div>
+                  <span class="ava">А</span>
+                </div>
+                <div class="f-search"><span class="ic-search"></span>Блюда и рестораны</div>
+                <div class="f-repeat">
+                  <div class="f-repeat__top"><small>Ваш прошлый заказ</small><b>Пиццерия «Марко»</b></div>
+                  <div class="f-repeat__items"><span class="dish d1"></span><span class="dish d2"></span><span class="dish d3"></span><em>Пепперони, Цезарь, морс</em></div>
+                  <div class="f-repeat__bottom"><b>1 240 ₽</b><span class="f-btn">Повторить</span></div>
+                </div>
+                <div class="f-cats">
+                  <span><i class="c1"></i>Пицца</span><span><i class="c2"></i>Суши</span><span><i class="c3"></i>Бургеры</span><span><i class="c4"></i>Супы</span>
+                </div>
+                <div class="f-sec">Рядом с вами</div>
+                <div class="f-rest">
+                  <div class="f-rest__img"><span class="f-badge">−20%</span></div>
+                  <div class="f-rest__row"><b>Суши Мастер</b><span>★ 4,8</span></div>
+                  <small>25–35 мин · доставка 99 ₽</small>
+                </div>
+                <nav class="tabs"><span class="on"><i></i>Главная</span><span><i></i>Поиск</span><span><i></i>Заказы</span><span><i></i>Профиль</span></nav>
+              </div></div></div>
+      <div class="float f2" aria-hidden="true"><div class="dev"><div class="scr hab">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <div class="h-head"><div><small>13–19 октября</small><strong>Эта неделя</strong></div><span class="h-chip">Неделя ▾</span></div>
+                <div class="h-sum">
+                  <div class="ring" style="--p:.71"><b>71%</b></div>
+                  <div><b>35 из 49</b><small>отметок выполнено</small><span class="h-up">+12% к прошлой неделе</span></div>
+                </div>
+                <div class="h-chart">
+                  <div style="--h:.57"><i></i><small>Пн</small></div>
+                  <div style="--h:.86"><i></i><small>Вт</small></div>
+                  <div style="--h:.71"><i></i><small>Ср</small></div>
+                  <div style="--h:1"><i></i><small>Чт</small></div>
+                  <div style="--h:.43"><i></i><small>Пт</small></div>
+                  <div style="--h:.71"><i></i><small>Сб</small></div>
+                  <div class="today" style="--h:.86"><i></i><small>Вс</small></div>
+                </div>
+                <div class="h-streak"><span class="flame"></span><div><b>Серия 12 дней</b><small>Вода 2 л — лучший результат</small></div></div>
+                <div class="h-list">
+                  <div><span class="chk on"></span>Вода 2 л<em>7/7</em></div>
+                  <div><span class="chk on"></span>Чтение 20 мин<em>6/7</em></div>
+                  <div><span class="chk"></span>Зарядка<em>4/7</em></div>
+                  <div><span class="chk on"></span>Сон до 23:00<em>5/7</em></div>
+                  <div><span class="chk"></span>Английский<em>3/7</em></div>
+                </div>
+                <nav class="tabs hab-tabs"><span><i></i>Сегодня</span><span class="on"><i></i>Прогресс</span><span><i></i>Привычки</span><span><i></i>Профиль</span></nav>
+              </div></div></div>
+      <span class="tag-f t1" aria-hidden="true"><span class="ic-al"></span>Auto Layout · gap 16</span>
+      <span class="tag-f t2" aria-hidden="true"><span class="sw"></span>#8B5CF6</span>
+      <span class="tag-f t3" aria-hidden="true">Prototype ▶ Smart animate</span>
+      <div class="cursor-f" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 2l7 19 2.5-8L21 10.5z"/></svg><span>Рекрутер</span></div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Figma</span><span>UX-исследования</span><span>Прототипы</span><span>UI-дизайн</span><span>Адаптив</span><span>Дизайн-системы</span><span>User flow</span>
+      <span>Figma</span><span>UX-исследования</span><span>Прототипы</span><span>UI-дизайн</span><span>Адаптив</span><span>Дизайн-системы</span><span>User flow</span>
+    </div>
+  </div>
+
+  <section class="wrap" id="services">
+    <div class="sec__head reveal">
+      <p class="eyebrow">Услуги</p>
+      <h2>Что я могу <em>для вас сделать</em></h2>
+      <p class="sub">Задачи, которые я уже закрываю сам. На крупные продукты иду junior-дизайнером в команду.</p>
+    </div>
+    <div class="services">
+      <article class="svc glass tilt reveal" style="--i:0">
+        <div class="svc__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8M8 16h5"/></svg></div>
+        <h3>Дизайн лендинга</h3>
+        <p>Одностраничный сайт для продукта, услуги или события: структура, дизайн для десктопа и телефона.</p>
+        <span class="time">≈ 1–2 недели</span>
+      </article>
+      <article class="svc glass tilt reveal" style="--i:1">
+        <div class="svc__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+        <h3>Экраны мобильного приложения</h3>
+        <p>Ключевые экраны под iOS и Android по гайдлайнам: онбординг, каталог, карточка, профиль.</p>
+        <span class="time">≈ 1–3 недели</span>
+      </article>
+      <article class="svc glass tilt reveal" style="--i:2">
+        <div class="svc__icon"><svg viewBox="0 0 24 24"><path d="M4 20 20 4M14 4h6v6"/><path d="M4 10V4h6"/></svg></div>
+        <h3>Редизайн сайта</h3>
+        <p>Нахожу, где пользователям неудобно, и предлагаю обновлённый вариант с понятной навигацией.</p>
+        <span class="time">≈ 1–2 недели</span>
+      </article>
+      <article class="svc glass tilt reveal" style="--i:0">
+        <div class="svc__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
+        <h3>Прототипы и вайрфреймы</h3>
+        <p>Быстрые макеты и кликабельный прототип, чтобы проверить идею до дизайна и разработки.</p>
+        <span class="time">≈ 2–5 дней</span>
+      </article>
+      <article class="svc glass tilt reveal" style="--i:1">
+        <div class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><rect x="4" y="14" width="16" height="6" rx="3"/></svg></div>
+        <h3>UI-кит и компоненты</h3>
+        <p>Цвета, типографика, кнопки, поля и карточки в Figma с вариантами и Auto Layout.</p>
+        <span class="time">≈ 3–7 дней</span>
+      </article>
+      <article class="svc glass tilt reveal" style="--i:2">
+        <div class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6"/></svg></div>
+        <h3>UX-аудит</h3>
+        <p>Разбираю сайт или приложение по эвристикам юзабилити и отдаю список проблем с решениями.</p>
+        <span class="time">≈ 2–4 дня</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="skills">
+    <div class="sec__head reveal">
+      <p class="eyebrow">Навыки</p>
+      <h2>Что я умею <em>и что изучаю</em></h2>
+      <p class="sub">Честная шкала: длинная полоса значит «делаю уверенно», короткая — «в процессе изучения».</p>
+    </div>
+    <div class="skills">
+      <div class="glass reveal">
+        <h3>Хард-скиллы</h3>
+        <ul class="bars">
+          <li style="--i:0"><div class="row">Вайрфреймы и прототипы<span class="lv">уверенно</span></div><div class="track"><span class="fill" style="--v:88"></span></div></li>
+          <li style="--i:1"><div class="row">UI: сетки, типографика, цвет<span class="lv">уверенно</span></div><div class="track"><span class="fill" style="--v:82"></span></div></li>
+          <li style="--i:2"><div class="row">Адаптивный дизайн<span class="lv">уверенно</span></div><div class="track"><span class="fill" style="--v:80"></span></div></li>
+          <li style="--i:3"><div class="row">Компоненты и Auto Layout<span class="lv">хорошо</span></div><div class="track"><span class="fill" style="--v:68"></span></div></li>
+          <li style="--i:4"><div class="row">User flow и CJM<span class="lv">хорошо</span></div><div class="track"><span class="fill" style="--v:62"></span></div></li>
+          <li style="--i:5"><div class="row">Юзабилити-тестирование<span class="lv">изучаю</span></div><div class="track"><span class="fill" style="--v:40"></span></div></li>
+          <li style="--i:6"><div class="row">Дизайн-системы и токены<span class="lv">изучаю</span></div><div class="track"><span class="fill" style="--v:35"></span></div></li>
+        </ul>
+      </div>
+      <div class="glass reveal" style="--i:1">
+        <h3>Инструменты</h3>
+        <ul class="layers">
+          <li><span class="lg" style="background:linear-gradient(135deg,#a259ff,#f24e1e)">F</span>Figma<span>основной</span></li>
+          <li><span class="lg" style="background:#7c3aed">Fj</span>FigJam<span>хорошо</span></li>
+          <li><span class="lg" style="background:#1d4ed8">Ps</span>Photoshop<span>хорошо</span></li>
+          <li><span class="lg" style="background:#ca8a04">M</span>Miro<span>хорошо</span></li>
+          <li><span class="lg" style="background:#0f766e">Fr</span>Framer / Tilda<span>изучаю</span></li>
+          <li><span class="lg" style="background:#be185d">&lt;/&gt;</span>HTML/CSS<span>основы</span></li>
+        </ul>
+        <ul class="soft" aria-label="Личные качества">
+          <li>Внимание к деталям</li><li>Принимаю фидбек</li><li>Объясняю решения</li><li>Соблюдаю сроки</li><li>Быстро учусь</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <section class="frame" id="services" aria-labelledby="services-title">
-    <div class="frame__label"><b>#</b> Services · Auto layout · gap 16</div>
-    <div class="frame__body">
-      <h2 id="services-title">Что я могу для вас сделать</h2>
-      <p class="sub">Задачи, которые я уже умею закрывать сам. На крупные продукты иду как junior в команду.</p>
-      <div class="services">
-        <article class="svc">
-          <div class="svc__icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h8M8 16h5"/></svg></div>
-          <h3>Дизайн лендинга</h3>
-          <p>Одностраничный сайт для продукта, услуги или события: структура, тексты-заглушки, дизайн для десктопа и телефона.</p>
-          <span class="mono">≈ 1–2 недели</span>
-        </article>
-        <article class="svc">
-          <div class="svc__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
-          <h3>Экраны мобильного приложения</h3>
-          <p>Ключевые экраны под iOS и Android с учётом гайдлайнов: онбординг, каталог, карточка, профиль.</p>
-          <span class="mono">≈ 1–3 недели</span>
-        </article>
-        <article class="svc">
-          <div class="svc__icon"><svg viewBox="0 0 24 24"><path d="M4 20 20 4M14 4h6v6"/><path d="M4 10V4h6"/></svg></div>
-          <h3>Редизайн существующего сайта</h3>
-          <p>Нахожу, где пользователям неудобно, и предлагаю обновлённый вариант с понятной навигацией.</p>
-          <span class="mono">≈ 1–2 недели</span>
-        </article>
-        <article class="svc">
-          <div class="svc__icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg></div>
-          <h3>Прототипы и вайрфреймы</h3>
-          <p>Быстрые чёрно-белые макеты и кликабельный прототип, чтобы проверить идею до дизайна и разработки.</p>
-          <span class="mono">≈ 2–5 дней</span>
-        </article>
-        <article class="svc">
-          <div class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="7" r="3"/><rect x="4" y="14" width="16" height="6" rx="3"/></svg></div>
-          <h3>UI-кит и компоненты</h3>
-          <p>Цвета, типографика, кнопки, поля и карточки в Figma с вариантами и Auto Layout, готовые для разработчика.</p>
-          <span class="mono">≈ 3–7 дней</span>
-        </article>
-        <article class="svc">
-          <div class="svc__icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6"/></svg></div>
-          <h3>UX-аудит и улучшения</h3>
-          <p>Разбираю сайт или приложение по эвристикам юзабилити и отдаю список проблем с вариантами решения.</p>
-          <span class="mono">≈ 2–4 дня</span>
-        </article>
-      </div>
+  <section class="wrap" id="process">
+    <div class="sec__head reveal">
+      <p class="eyebrow">Процесс</p>
+      <h2>Как я работаю <em>над задачей</em></h2>
     </div>
+    <ol class="process">
+      <li class="reveal" style="--i:0"><span class="n">01</span><h3>Бриф</h3><p>Выясняю цель, аудиторию и ограничения.</p></li>
+      <li class="reveal" style="--i:1"><span class="n">02</span><h3>Исследование</h3><p>Смотрю конкурентов, описываю пользователей.</p></li>
+      <li class="reveal" style="--i:2"><span class="n">03</span><h3>Структура</h3><p>User flow и карта экранов.</p></li>
+      <li class="reveal" style="--i:3"><span class="n">04</span><h3>Вайрфреймы</h3><p>Чёрно-белые макеты, согласование.</p></li>
+      <li class="reveal" style="--i:4"><span class="n">05</span><h3>UI-дизайн</h3><p>Стиль, компоненты, все состояния.</p></li>
+      <li class="reveal" style="--i:5"><span class="n">06</span><h3>Передача</h3><p>Прототип и макеты для разработки.</p></li>
+    </ol>
   </section>
 
-  <section class="frame" id="skills" aria-labelledby="skills-title">
-    <div class="frame__label"><b>#</b> Skills · Layers</div>
-    <div class="frame__body">
-      <h2 id="skills-title">Навыки и инструменты</h2>
-      <p class="sub">Честно отмечаю уровень: что делаю уверенно, а что ещё изучаю.</p>
-      <div class="skills">
-        <div class="skillgroup">
-          <h3>Хард-скиллы</h3>
-          <ul class="levels">
-            <li>Вайрфреймы и прототипирование <span class="lvl lvl--3">уверенно</span></li>
-            <li>UI: сетки, типографика, цвет <span class="lvl lvl--3">уверенно</span></li>
-            <li>Адаптив: десктоп, планшет, телефон <span class="lvl lvl--3">уверенно</span></li>
-            <li>Компоненты, варианты, Auto Layout <span class="lvl lvl--2">хорошо</span></li>
-            <li>User flow и информационная архитектура <span class="lvl lvl--2">хорошо</span></li>
-            <li>Анализ конкурентов, персоны, CJM <span class="lvl lvl--2">хорошо</span></li>
-            <li>Юзабилити-тестирование <span class="lvl lvl--1">изучаю</span></li>
-            <li>Дизайн-системы и токены <span class="lvl lvl--1">изучаю</span></li>
-            <li>Доступность (WCAG, контраст) <span class="lvl lvl--1">изучаю</span></li>
-          </ul>
-          <div class="legend mono">
-            <span><i class="lvl lvl--3">уверенно</i> делаю сам</span>
-            <span><i class="lvl lvl--2">хорошо</i> делал в учебных проектах</span>
-            <span><i class="lvl lvl--1">изучаю</i> в процессе</span>
-          </div>
-        </div>
-        <div>
-          <div class="layers">
-            <div class="layers__head">Layers — инструменты</div>
-            <ul>
-              <li class="main">Figma <span class="lvl lvl--3">основной</span></li>
-              <li class="main">FigJam <span class="lvl lvl--2">хорошо</span></li>
-              <li>Photoshop <span class="lvl lvl--2">хорошо</span></li>
-              <li>Miro <span class="lvl lvl--2">хорошо</span></li>
-              <li>Tilda / Framer <span class="lvl lvl--1">изучаю</span></li>
-              <li>Notion <span class="lvl lvl--2">хорошо</span></li>
-              <li>HTML/CSS (основы) <span class="lvl lvl--1">изучаю</span></li>
-            </ul>
-          </div>
-          <ul class="soft" aria-label="Личные качества">
-            <li>Внимание к деталям</li>
-            <li>Принимаю фидбек</li>
-            <li>Объясняю решения</li>
-            <li>Соблюдаю сроки</li>
-            <li>Быстро учусь</li>
-          </ul>
-        </div>
-      </div>
+  <section class="wrap" id="cases">
+    <div class="sec__head reveal">
+      <p class="eyebrow">Кейсы</p>
+      <h2>Избранные <em>проекты</em></h2>
+      <p class="sub">Учебные и концептуальные проекты: путь от задачи к решению, а не только финальная картинка. Замените их на свои работы.</p>
     </div>
-  </section>
-
-  <section class="frame" aria-labelledby="process-title">
-    <div class="frame__label"><b>#</b> Process · 6 steps</div>
-    <div class="frame__body">
-      <h2 id="process-title">Как я работаю над задачей</h2>
-      <p class="sub">Один и тот же путь для лендинга и для приложения. Меняется только глубина каждого шага.</p>
-      <ol class="process">
-        <li><h3>Бриф</h3><p>Выясняю цель, аудиторию и ограничения.</p></li>
-        <li><h3>Исследование</h3><p>Смотрю конкурентов, описываю пользователей.</p></li>
-        <li><h3>Структура</h3><p>User flow и карта экранов.</p></li>
-        <li><h3>Вайрфреймы</h3><p>Чёрно-белые макеты, согласование.</p></li>
-        <li><h3>UI-дизайн</h3><p>Стиль, компоненты, все состояния.</p></li>
-        <li><h3>Передача</h3><p>Прототип и макеты для разработки.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="frame" id="cases" aria-labelledby="cases-title">
-    <div class="frame__label"><b>#</b> Cases · учебные проекты</div>
-    <div class="frame__body">
-      <h2 id="cases-title">Кейсы</h2>
-      <p class="sub">Учебные и концептуальные проекты. Каждый показывает путь от задачи к решению, а не только финальную картинку. Замените их на свои работы.</p>
       <div class="cases">
-        <article class="case">
+        <article class="case glass">
           <div class="case__shot shot--food" aria-label="Макеты: главный экран и корзина приложения доставки">
             <figure class="shot">
               <div class="dev"><div class="scr food">
@@ -655,7 +912,7 @@ footer { padding-block: 0 40px; text-align: center; }
           </div>
         </article>
 
-        <article class="case">
+        <article class="case glass">
           <div class="case__shot shot--coffee" aria-label="Макеты: десктопная и мобильная версия лендинга кофейни">
             <figure class="shot shot--wide">
               <div class="browser">
@@ -715,7 +972,7 @@ footer { padding-block: 0 40px; text-align: center; }
           </div>
         </article>
 
-        <article class="case">
+        <article class="case glass">
           <div class="case__shot shot--habit" aria-label="Макеты: экран статистики трекера привычек до и после редизайна">
             <figure class="shot">
               <div class="dev"><div class="scr hab hab--old">
@@ -776,67 +1033,193 @@ footer { padding-block: 0 40px; text-align: center; }
           </div>
         </article>
       </div>
-    </div>
+
   </section>
 
-  <section class="frame" id="edu" aria-labelledby="edu-title">
-    <div class="frame__label"><b>#</b> Education</div>
-    <div class="frame__body">
-      <h2 id="edu-title">Обучение</h2>
-      <p class="sub">Впишите сюда свои курсы, даты и сертификаты.</p>
-      <ul class="edu">
-        <li><span class="mono">[2025 — 2026]</span><div><h3>[Курс UI/UX-дизайна, школа]</h3><p>Исследования, прототипирование, UI, дипломный проект.</p></div></li>
-        <li><span class="mono">[2025]</span><div><h3>[Курс по Figma]</h3><p>Компоненты, варианты, Auto Layout, прототипы.</p></div></li>
-        <li><span class="mono">постоянно</span><div><h3>Самообучение</h3><p>Разборы интерфейсов, книги «Не заставляйте меня думать» и «Дизайн привычных вещей», челленджи Daily UI.</p></div></li>
-      </ul>
-      <dl class="facts">
-        <div><dt>Ищу</dt><dd>Стажировка или junior</dd></div>
-        <div><dt>Формат</dt><dd>Удалённо / офис / фриланс</dd></div>
+  <section class="wrap" id="edu">
+    <div class="sec__head reveal">
+      <p class="eyebrow">Обучение</p>
+      <h2>Где я <em>учусь</em></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="glass reveal">
+        <ul class="edu">
+          <li><span class="yr">[2025 — 2026]</span><div><h3>[Курс UI/UX-дизайна, школа]</h3><p>Исследования, прототипирование, UI, дипломный проект.</p></div></li>
+          <li><span class="yr">[2025]</span><div><h3>[Курс по Figma]</h3><p>Компоненты, варианты, Auto Layout, прототипы.</p></div></li>
+          <li><span class="yr">постоянно</span><div><h3>Самообучение</h3><p>Разборы интерфейсов, книги «Не заставляйте меня думать» и «Дизайн привычных вещей», челлендж Daily UI.</p></div></li>
+        </ul>
+      </div>
+      <dl class="facts reveal" style="--i:1">
+        <div><dt>Ищу</dt><dd>Стажировку или junior</dd></div>
+        <div><dt>Формат</dt><dd>Удалённо, офис, фриланс</dd></div>
         <div><dt>Готов начать</dt><dd>Сразу</dd></div>
       </dl>
     </div>
   </section>
 
-  <section class="frame" id="contact" aria-labelledby="contact-title">
-    <div class="frame__label"><b>#</b> Contact</div>
-    <div class="frame__body contact">
-      <div class="contact__cta">
-        <h2 id="contact-title">Давайте поработаем вместе</h2>
-        <p>Готов взять тестовое задание или небольшой проект. Отвечаю в течение дня.</p>
-        <p class="mono">Ссылки на портфолио — замените на свои.</p>
+  <section class="wrap" id="contact">
+    <div class="contact reveal">
+      <div class="contact__in">
+        <div class="contact__cta">
+          <p class="eyebrow">Контакты</p>
+          <h2>Давайте <em>поработаем</em> вместе</h2>
+          <p>Готов взять тестовое задание или небольшой проект. Отвечаю в течение дня.</p>
+        </div>
+        <ul class="links">
+          <li><span class="k">Email</span><span class="v" id="c-email">[your.email@gmail.com]</span><button class="copy" type="button" data-copy="c-email">Скопировать</button></li>
+          <li><span class="k">Telegram</span><span class="v" id="c-tg">[@username]</span><button class="copy" type="button" data-copy="c-tg">Скопировать</button></li>
+          <li><span class="k">Behance</span><a class="v" href="https://www.behance.net/" target="_blank" rel="noopener">behance.net/[ник]</a></li>
+          <li><span class="k">Dribbble</span><a class="v" href="https://dribbble.com/" target="_blank" rel="noopener">dribbble.com/[ник]</a></li>
+        </ul>
       </div>
-      <ul class="links">
-        <li><span class="k">Email</span><span class="v" id="c-email">[your.email@gmail.com]</span><button class="copy" type="button" data-copy="c-email">Скопировать</button></li>
-        <li><span class="k">Telegram</span><span class="v" id="c-tg">[@username]</span><button class="copy" type="button" data-copy="c-tg">Скопировать</button></li>
-        <li><span class="k">Behance</span><a class="v" href="https://www.behance.net/" target="_blank" rel="noopener">behance.net/[ник]</a></li>
-        <li><span class="k">Dribbble</span><a class="v" href="https://dribbble.com/" target="_blank" rel="noopener">dribbble.com/[ник]</a></li>
-      </ul>
     </div>
   </section>
-
 </main>
 
-<footer class="wrap mono">© <span id="year">2026</span> · Сделано в Figma и с любовью к деталям</footer>
+<footer class="wrap">© <span id="year">2026</span> · Спроектировано в Figma, собрано с любовью к деталям</footer>
 
 <script>
 (() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
   const root = document.documentElement;
-  try {
-    const t = localStorage.getItem('resume-theme');
-    if (t === 'light' || t === 'dark') root.dataset.theme = t;
-  } catch (e) {}
 
-  document.getElementById('theme').addEventListener('click', () => {
-    const cur = root.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    const next = cur === 'dark' ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try { localStorage.setItem('resume-theme', next); } catch (e) {}
+  // Name: split into letters for the entrance
+  const name = document.getElementById('name');
+  if (!reduce) {
+    const text = name.textContent;
+    name.textContent = '';
+    let i = 0;
+    text.split(' ').forEach((word, w) => {
+      if (w) name.appendChild(document.createTextNode(' '));
+      const wordEl = document.createElement('span');
+      wordEl.style.whiteSpace = 'nowrap';
+      [...word].forEach(ch => {
+        const s = document.createElement('span');
+        s.className = 'ch';
+        s.style.setProperty('--i', i++);
+        s.textContent = ch;
+        wordEl.appendChild(s);
+      });
+      name.appendChild(wordEl);
+    });
+    name.setAttribute('aria-label', text);
+  }
+
+  // Typing role
+  const typed = document.getElementById('typed');
+  const words = ['мобильные приложения', 'лендинги', 'прототипы', 'UI-киты', 'редизайн сайтов'];
+  if (!reduce) {
+    let w = 0, c = words[0].length, del = true;
+    const tick = () => {
+      const word = words[w];
+      c += del ? -1 : 1;
+      typed.textContent = word.slice(0, c);
+      let wait = del ? 40 : 80;
+      if (!del && c === word.length) { del = true; wait = 1800; }
+      else if (del && c === 0) { del = false; w = (w + 1) % words.length; wait = 300; }
+      setTimeout(tick, wait);
+    };
+    setTimeout(tick, 2600);
+  }
+
+  // Pointer spotlight + hero parallax
+  const spot = document.querySelector('.spot');
+  const stage = document.getElementById('stage');
+  let mx = -999, my = -999, sx = mx, sy = my;
+  if (fine && !reduce) {
+    addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+    const loop = () => {
+      sx += (mx - sx) * 0.12; sy += (my - sy) * 0.12;
+      spot.style.setProperty('--mx', sx + 'px');
+      spot.style.setProperty('--my', sy + 'px');
+      requestAnimationFrame(loop);
+    };
+    loop();
+    stage.parentElement.addEventListener('pointermove', e => {
+      const r = stage.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const y = (e.clientY - (r.top + r.height / 2)) / r.height;
+      stage.style.setProperty('--rx', (x * 14).toFixed(2));
+      stage.style.setProperty('--ry', (y * 14).toFixed(2));
+    });
+    stage.parentElement.addEventListener('pointerleave', () => {
+      stage.style.setProperty('--rx', 0);
+      stage.style.setProperty('--ry', 0);
+    });
+  }
+
+  // Glass spotlight + tilt
+  document.querySelectorAll('.glass').forEach(el => {
+    el.addEventListener('pointermove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      el.style.setProperty('--x', x + 'px');
+      el.style.setProperty('--y', y + 'px');
+      if (el.classList.contains('tilt') && fine && !reduce) {
+        el.style.setProperty('--tx2', ((0.5 - y / r.height) * 8).toFixed(2) + 'deg');
+        el.style.setProperty('--ty2', ((x / r.width - 0.5) * 8).toFixed(2) + 'deg');
+      }
+    });
+    el.addEventListener('pointerleave', () => {
+      el.style.setProperty('--tx2', '0deg');
+      el.style.setProperty('--ty2', '0deg');
+    });
   });
 
+  // Magnetic buttons
+  if (fine && !reduce) {
+    document.querySelectorAll('.magnet').forEach(el => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--tx', ((e.clientX - r.left - r.width / 2) * 0.25) + 'px');
+        el.style.setProperty('--ty', ((e.clientY - r.top - r.height / 2) * 0.35) + 'px');
+      });
+      el.addEventListener('pointerleave', () => {
+        el.style.setProperty('--tx', '0px');
+        el.style.setProperty('--ty', '0px');
+      });
+    });
+  }
+
+  // Reveal: everything is visible at rest; entrance replays just before it scrolls into view
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('play');
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px 12% 0px' });
+    const vh = innerHeight;
+    document.querySelectorAll('.reveal, .bars, .case').forEach(el => {
+      if (el.getBoundingClientRect().top > vh) io.observe(el);
+    });
+    document.querySelectorAll('.case').forEach(el => el.classList.add('reveal'));
+  }
+
+  // Scroll progress + active nav
+  const bar = document.querySelector('.progress');
+  const links = [...document.querySelectorAll('.bar nav a')];
+  const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+  const onScroll = () => {
+    const max = root.scrollHeight - innerHeight;
+    bar.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
+    let cur = -1;
+    secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < innerHeight * 0.4) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('active', i === cur));
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Copy buttons
   document.querySelectorAll('[data-copy]').forEach(btn => {
     btn.addEventListener('click', () => {
       const el = document.getElementById(btn.dataset.copy);
-      const done = () => { btn.textContent = 'Скопировано'; setTimeout(() => { btn.textContent = 'Скопировать'; }, 1600); };
+      const done = () => {
+        btn.textContent = 'Скопировано'; btn.classList.add('done');
+        setTimeout(() => { btn.textContent = 'Скопировать'; btn.classList.remove('done'); }, 1600);
+      };
       const select = () => {
         const r = document.createRange(); r.selectNodeContents(el);
         const s = getSelection(); s.removeAllRanges(); s.addRange(r);
