@@ -204,30 +204,179 @@ h1 { font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 700; letter-spacing: -0
 .process p { font-size: .9rem; color: var(--muted); }
 
 /* Cases */
-.cases { display: grid; gap: 20px; }
-.case { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 32px; align-items: center; padding: 20px; border: 1px solid var(--line); border-radius: var(--r); }
-.case__shot { aspect-ratio: 4 / 3; max-width: 100%; border-radius: 8px; display: grid; place-items: center; overflow: hidden; }
-.case:nth-child(1) .case__shot { background: #ffcf5c; }
-.case:nth-child(2) .case__shot { background: #7fd6b3; }
-.case:nth-child(3) .case__shot { background: #b9a7ff; }
-.phone {
-  width: 34%; aspect-ratio: 9 / 19; background: #fff; border: 5px solid #16181d; border-radius: 18px;
-  padding: 10% 8%; display: grid; gap: 6%; align-content: start; box-shadow: 0 20px 40px -18px rgb(0 0 0 / .5);
+.cases { display: grid; gap: 28px; }
+.case { display: grid; gap: 24px; padding: 16px; border: 1px solid var(--line); border-radius: var(--r); }
+.case__shot {
+  border-radius: 8px; padding: clamp(20px, 4vw, 44px) clamp(12px, 3vw, 40px) clamp(14px, 2.5vw, 28px);
+  display: flex; justify-content: center; align-items: flex-end; gap: clamp(12px, 4vw, 48px); overflow: hidden;
 }
-.phone i { display: block; height: 7px; border-radius: 3px; background: #e3e6ec; }
-.phone i.w { width: 60%; }
-.phone i.c { height: 34px; border-radius: 6px; background: #f1f2f5; }
-.phone i.b { height: 14px; border-radius: 7px; background: #16181d; }
-.phone--web { width: 70%; aspect-ratio: 16 / 10; border-radius: 6px; border-width: 4px; padding: 5%; grid-template-columns: 1fr 1fr; }
-.phone--web i:first-child { grid-column: 1 / -1; height: 10px; }
-.phone--web i.c { height: auto; aspect-ratio: 4 / 3; }
-.case__text { display: grid; gap: 12px; min-width: 0; }
+.shot--food { background: #ffe1c8; }
+.shot--coffee { background: #d6e4da; }
+.shot--habit { background: #e1dcff; }
+.shot { display: grid; gap: 12px; justify-items: center; width: clamp(140px, 30%, 260px); min-width: 0; }
+.shot--wide { width: min(62%, 640px); }
+.shot figcaption { font: 500 .72rem var(--f-mono); color: #3b3f4a; text-align: center; }
+.shot figcaption.cap-old { color: #b42318; }
+.case__text { display: grid; gap: 12px; min-width: 0; padding: 4px 8px 8px; }
+.case__text dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .case__tag { font: 500 .72rem var(--f-mono); color: var(--pin); text-transform: uppercase; letter-spacing: .06em; }
-.case dl { display: grid; gap: 8px; }
-.case dt { font-weight: 600; font-size: .9rem; }
-.case dd { color: var(--muted); font-size: .95rem; }
+.case__text dt { font-weight: 600; font-size: .9rem; }
+.case__text dd { color: var(--muted); font-size: .95rem; }
 .tags { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
 .tags li { font: .72rem var(--f-mono); padding: 3px 8px; border-radius: 4px; background: var(--canvas); color: var(--muted); }
+
+/* Device frames: screens are designs, so they keep their own fixed palette in both themes */
+.dev {
+  width: 100%; aspect-ratio: 9 / 19.5; background: #101114; border-radius: 13% / 6%;
+  padding: 3.2%; box-shadow: 0 24px 50px -22px rgb(0 0 0 / .55); container-type: inline-size;
+}
+.browser {
+  width: 100%; aspect-ratio: 16 / 10.4; background: #fff; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 24px 50px -22px rgb(0 0 0 / .45); display: flex; flex-direction: column; container-type: inline-size;
+}
+.browser__bar { display: flex; align-items: center; gap: 1.2cqw; padding: 1.4cqw 1.8cqw; background: #eef0f3; }
+.browser__bar i { width: 1.4cqw; height: 1.4cqw; border-radius: 50%; background: #c9cdd5; }
+.browser__bar span { margin-left: 2cqw; flex: 1; font: 1.5cqw var(--f-mono); color: #6b7080; background: #fff; border-radius: 1cqw; padding: .4cqw 1.5cqw; }
+.scr {
+  height: 100%; overflow: hidden; position: relative; background: #fff; color: #17181c;
+  border-radius: 10.5% / 4.9%; font-size: 4.3cqw; line-height: 1.3; font-family: var(--f-body);
+  display: flex; flex-direction: column; gap: .8em; padding: 0 1em;
+}
+.scr small { font-size: .78em; color: #7a7f8c; display: block; }
+.scr b, .scr strong { font-weight: 600; }
+.sb { display: flex; justify-content: space-between; align-items: center; padding-top: .9em; font-size: .85em; }
+.sb__i { width: 3.2em; height: .8em; border-radius: .2em; background: linear-gradient(90deg, #17181c 55%, transparent 55% 62%, #17181c 62%); }
+
+/* Food app */
+.food { --o: #ff5a36; }
+.f-head { display: flex; justify-content: space-between; align-items: center; }
+.f-head strong { font-size: 1.08em; display: flex; align-items: center; gap: .35em; }
+.caret { width: .45em; height: .45em; border-right: 2px solid var(--o); border-bottom: 2px solid var(--o); transform: rotate(45deg) translateY(-.15em); }
+.ava { width: 2.2em; height: 2.2em; border-radius: 50%; background: #ffe0d6; color: var(--o); display: grid; place-items: center; font-weight: 600; }
+.f-search { background: #f2f3f5; border-radius: .8em; padding: .7em .9em; color: #8b8f9a; font-size: .9em; display: flex; align-items: center; gap: .6em; }
+.ic-search { width: .8em; height: .8em; border: 2px solid #8b8f9a; border-radius: 50%; }
+.f-repeat { background: var(--o); color: #fff; border-radius: 1em; padding: .9em; display: grid; gap: .6em; }
+.f-repeat small { color: rgb(255 255 255 / .8); }
+.f-repeat__items { display: flex; align-items: center; }
+.f-repeat__items .dish { margin-right: -.5em; border: 2px solid var(--o); }
+.f-repeat__items em { font-style: normal; font-size: .78em; margin-left: 1em; opacity: .9; }
+.f-repeat__bottom { display: flex; justify-content: space-between; align-items: center; }
+.f-btn { background: #fff; color: var(--o); font-weight: 600; font-size: .85em; padding: .45em .9em; border-radius: 2em; }
+.dish { width: 2em; height: 2em; border-radius: 50%; flex: none; display: inline-block; }
+.d1 { background: radial-gradient(circle at 35% 40%, #b8321c 0 12%, transparent 13%), radial-gradient(circle at 65% 60%, #b8321c 0 12%, transparent 13%), radial-gradient(#f6c453 0 55%, #d98a2b 56%); }
+.d2 { background: radial-gradient(circle at 40% 40%, #f3e7c4 0 14%, transparent 15%), radial-gradient(#7cc36a 0 60%, #4f9a43 61%); }
+.d3 { background: radial-gradient(circle at 50% 30%, #fff 0 10%, transparent 11%), radial-gradient(#c2185b 0 60%, #8e1043 61%); }
+.f-cats { display: flex; justify-content: space-between; }
+.f-cats span { display: grid; justify-items: center; gap: .3em; font-size: .72em; }
+.f-cats i { width: 3em; height: 3em; border-radius: 1em; }
+.c1 { background: #ffedd5; } .c2 { background: #dbeafe; } .c3 { background: #fef3c7; } .c4 { background: #dcfce7; }
+.f-sec { font-weight: 600; font-size: 1.02em; }
+.f-rest { display: grid; gap: .3em; }
+.f-rest__img { height: 5.5em; border-radius: .8em; position: relative; background: radial-gradient(circle at 30% 55%, #fff 0 9%, #f97362 10% 16%, transparent 17%), radial-gradient(circle at 60% 45%, #fff 0 9%, #fbbf24 10% 16%, transparent 17%), radial-gradient(circle at 82% 60%, #fff 0 9%, #4ade80 10% 16%, transparent 17%), #1f2937; }
+.f-badge { position: absolute; top: .5em; left: .5em; background: var(--o); color: #fff; font-size: .72em; font-weight: 600; padding: .2em .5em; border-radius: .4em; }
+.f-rest__row { display: flex; justify-content: space-between; }
+.f-rest__row span { font-size: .85em; }
+.tabs { margin: auto -1em 0; display: flex; justify-content: space-around; padding: .6em 0 1.4em; border-top: 1px solid #eceef1; font-size: .66em; color: #8b8f9a; background: #fff; }
+.tabs span { display: grid; justify-items: center; gap: .3em; }
+.tabs i { width: 1.8em; height: 1.8em; border-radius: .5em; border: 2px solid currentColor; }
+.tabs .on { color: var(--o); font-weight: 600; }
+.tabs .on i { background: var(--o); }
+.f-title { display: flex; align-items: baseline; gap: .6em; font-weight: 600; font-size: 1.25em; margin-top: .2em; }
+.f-title small { margin-left: auto; font-weight: 400; font-size: .62em; }
+.back { width: .55em; height: .55em; border-left: 2px solid #17181c; border-bottom: 2px solid #17181c; transform: rotate(45deg); align-self: center; }
+.f-item { display: flex; align-items: center; gap: .7em; padding-bottom: .7em; border-bottom: 1px solid #eceef1; }
+.f-item .dish { width: 2.8em; height: 2.8em; }
+.f-item div { flex: 1; min-width: 0; font-size: .9em; }
+.step { display: flex; align-items: center; gap: .55em; background: #f2f3f5; border-radius: 2em; padding: .2em .5em; font-size: .85em; font-weight: 600; }
+.step i { font-style: normal; color: var(--o); }
+.f-eta { background: #f2f3f5; border-radius: .9em; padding: .8em; display: grid; gap: .45em; font-size: .9em; }
+.f-eta .bar { height: .4em; border-radius: 1em; background: #dfe1e6; overflow: hidden; }
+.f-eta .bar i { display: block; width: 40%; height: 100%; background: var(--o); border-radius: inherit; }
+.f-promo { border: 1.5px dashed #cfd2d9; border-radius: .8em; padding: .65em .9em; display: flex; justify-content: space-between; font-size: .88em; color: #8b8f9a; }
+.f-promo span { color: var(--o); font-weight: 600; }
+.f-sum { display: grid; gap: .3em; font-size: .9em; }
+.f-sum div { display: flex; justify-content: space-between; }
+.f-sum dt { color: #7a7f8c; }
+.f-sum .tot { font-weight: 600; font-size: 1.1em; padding-top: .3em; }
+.f-sum .tot dt { color: #17181c; }
+.f-pay { margin-top: auto; margin-bottom: 1.6em; background: var(--o); color: #fff; text-align: center; font-weight: 600; padding: .85em; border-radius: .9em; }
+
+/* Coffee landing */
+.cof { --g: #1f3d2b; --l: #c8925f; background: #f7f3ee; }
+.cof--desk { border-radius: 0; font-size: 1.55cqw; padding: 0 3.5em; gap: 1.6em; flex: 1; }
+.c-nav { display: flex; align-items: center; gap: 2em; padding-top: 1.3em; font-size: .9em; color: #3b3f3a; }
+.cof:not(.cof--desk) .c-nav { justify-content: space-between; padding-top: 0; }
+.c-logo { display: flex; align-items: center; gap: .45em; color: var(--g); font: 700 1.2em var(--f-display); margin-right: auto; }
+.c-logo span { width: .9em; height: 1.2em; border-radius: 50%; background: var(--g); position: relative; }
+.c-logo span::after { content: ""; position: absolute; inset: 15% 45%; background: #f7f3ee; border-radius: 1em; }
+.c-btn { background: var(--g); color: #fff; font-weight: 600; font-size: .9em; padding: .65em 1.2em; border-radius: 2em; display: inline-block; text-align: center; }
+.c-btn--line { background: transparent; color: var(--g); box-shadow: inset 0 0 0 1.5px var(--g); }
+.c-btn--full { display: block; margin-top: .4em; }
+.c-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 2em; align-items: center; flex: 1; }
+.c-hero__text { display: grid; gap: .8em; }
+.c-hero__text small { color: var(--l); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; font-size: .72em; }
+.c-hero__text h4 { font: 700 2.5em/1.05 var(--f-display); color: var(--g); letter-spacing: -.02em; }
+.cof:not(.cof--desk) .c-hero__text h4 { font-size: 1.6em; }
+.c-hero__text p { color: #5b605a; font-size: .95em; max-width: 26em; }
+.c-ctas { display: flex; gap: .8em; }
+.c-art { position: relative; aspect-ratio: 1; border-radius: 50%; background: var(--g); display: grid; place-items: center; }
+.c-art--m { width: 75%; margin: .3em auto 0; }
+.saucer { position: absolute; width: 74%; height: 20%; bottom: 22%; border-radius: 50%; background: #eae3d9; }
+.cup { position: absolute; width: 46%; height: 34%; bottom: 30%; background: #fff; border-radius: 0 0 45% 45% / 0 0 70% 70%; }
+.cup::after { content: ""; position: absolute; right: -22%; top: 15%; width: 30%; height: 45%; border: .35em solid #fff; border-left: 0; border-radius: 0 50% 50% 0; }
+.cup i { position: absolute; left: 4%; right: 4%; top: -6%; height: 22%; border-radius: 50%; background: radial-gradient(ellipse at center, #e9c79f 0 30%, #8a5a33 60%); }
+.steam { position: absolute; top: 14%; width: 26%; height: 22%; border-left: .25em solid rgb(255 255 255 / .5); border-right: .25em solid rgb(255 255 255 / .35); border-radius: 50%; }
+.c-info { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1em; margin: 0 -3.5em; padding: 1.2em 3.5em; background: var(--g); color: #fff; }
+.c-info small { color: #a9c2b1; }
+.c-info--m { grid-template-columns: 1fr 1fr; margin: auto -1em 0; padding: 1em 1em 1.8em; font-size: .9em; }
+.burger { width: 1.4em; height: .9em; border-top: 2px solid var(--g); border-bottom: 2px solid var(--g); position: relative; }
+.burger::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px solid var(--g); transform: translateY(-50%); }
+
+.c-menu { display: grid; gap: .5em; font-size: .88em; }
+.c-menu div { display: flex; align-items: center; gap: .6em; padding-bottom: .5em; border-bottom: 1px solid #e6dfd5; }
+.c-menu em { margin-left: auto; font-style: normal; font-weight: 600; color: var(--g); }
+.c-dot { width: 1.6em; height: 1.6em; border-radius: 50%; background: radial-gradient(#e9c79f 0 35%, #8a5a33 70%); flex: none; }
+.c-dot--2 { background: radial-gradient(#f5e6d3 0 30%, #b07a4a 70%); }
+.c-dot--3 { background: radial-gradient(circle at 40% 40%, #fff 0 15%, #f0b35b 30% 70%); }
+
+/* Habit tracker */
+.hab { --v: #6c4cf5; }
+.hab--old { background: #fafafa; gap: .55em; font-family: Arial, sans-serif; }
+.o-title { display: flex; justify-content: space-between; font-weight: 700; letter-spacing: .1em; font-size: .9em; color: #333; }
+.o-tabs { display: flex; gap: .2em; font-size: .62em; }
+.o-tabs span { flex: 1; text-align: center; padding: .5em 0; background: #e6e6e6; color: #555; }
+.o-tabs .on { background: #888; color: #fff; }
+.o-row { display: grid; grid-template-columns: 2.6fr repeat(7, 1fr); gap: .25em; align-items: center; font-size: .6em; color: #444; }
+.o-row i { aspect-ratio: 1; border: 1px solid #bbb; background: #fff; }
+.o-row i.x { background: #9a9a9a; border-color: #9a9a9a; }
+.o-row--h i { border: 0; background: none; font-style: normal; text-align: center; color: #888; aspect-ratio: auto; }
+.o-note { font-size: .55em; color: #777; line-height: 1.4; }
+.o-fab { position: absolute; right: 1em; bottom: 1.6em; width: 2.4em; height: 2.4em; border-radius: 50%; background: #888; color: #fff; display: grid; place-items: center; font-size: 1.1em; }
+.h-head { display: flex; justify-content: space-between; align-items: flex-end; }
+.h-head strong { font: 700 1.35em var(--f-display); letter-spacing: -.01em; }
+.h-chip { font-size: .75em; padding: .35em .7em; border-radius: 2em; background: #f0edff; color: var(--v); font-weight: 600; }
+.h-sum { display: flex; align-items: center; gap: .9em; background: #f6f4ff; border-radius: 1em; padding: .8em; }
+.h-sum > div:last-child { display: grid; gap: .1em; }
+.h-sum > div:last-child b { font-size: 1.1em; }
+.h-up { font-size: .72em; color: #138a52; font-weight: 600; }
+.ring { --p: .7; width: 3.8em; height: 3.8em; border-radius: 50%; flex: none; display: grid; place-items: center; background: conic-gradient(var(--v) calc(var(--p) * 360deg), #e2dcff 0); position: relative; }
+.ring::before { content: ""; position: absolute; inset: .45em; border-radius: 50%; background: #f6f4ff; }
+.ring b { position: relative; font-size: .85em; color: var(--v); }
+.h-chart { display: flex; justify-content: space-between; align-items: flex-end; height: 6.5em; gap: .45em; padding-top: .3em; }
+.h-chart div { flex: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: .3em; }
+.h-chart i { width: 100%; height: calc(var(--h) * 78%); border-radius: .4em; background: #d9d1ff; }
+.h-chart .today i { background: var(--v); }
+.h-chart .today small { color: var(--v); font-weight: 600; }
+.h-streak { display: flex; align-items: center; gap: .7em; border: 1px solid #eceaf5; border-radius: 1em; padding: .7em .8em; }
+.flame { width: 1.9em; height: 1.9em; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: linear-gradient(45deg, #ff7a1a, #ffc23d); flex: none; }
+.h-list { display: grid; gap: .55em; font-size: .92em; }
+.h-list div { display: flex; align-items: center; gap: .6em; }
+.h-list em { margin-left: auto; font-style: normal; color: #7a7f8c; font-size: .85em; }
+.hab-tabs .on { color: var(--v); }
+.hab-tabs .on i { background: var(--v); }
+.chk { width: 1.3em; height: 1.3em; border-radius: 50%; border: 2px solid #cfc7ff; flex: none; position: relative; }
+.chk.on { background: var(--v); border-color: var(--v); }
+.chk.on::after { content: ""; position: absolute; left: 32%; top: 18%; width: 25%; height: 45%; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg); }
 
 /* Education */
 .edu { list-style: none; display: grid; gap: 0; }
@@ -260,7 +409,7 @@ footer { padding-block: 0 40px; text-align: center; }
   .avatar { max-width: 360px; aspect-ratio: 1 / 1; }
   .services { grid-template-columns: 1fr 1fr; }
   .process { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 24px; }
-  .case { grid-template-columns: 1fr; gap: 20px; }
+  .case__text dl { grid-template-columns: 1fr; gap: 10px; }
 }
 @media (max-width: 600px) {
   main { gap: 40px; padding-block: 28px 56px; }
@@ -270,7 +419,10 @@ footer { padding-block: 0 40px; text-align: center; }
   .process { grid-template-columns: 1fr 1fr; }
   .edu li { grid-template-columns: 1fr; gap: 4px; }
   .facts { grid-template-columns: 1fr; }
-  .case { padding: 14px; }
+  .case { padding: 10px; }
+  .shot { width: 46%; }
+  .shot--coffee { flex-wrap: wrap; }
+  .shot--wide { width: 100%; }
 }
 </style>
 </head>
@@ -445,23 +597,111 @@ footer { padding-block: 0 40px; text-align: center; }
       <p class="sub">Учебные и концептуальные проекты. Каждый показывает путь от задачи к решению, а не только финальную картинку. Замените их на свои работы.</p>
       <div class="cases">
         <article class="case">
-          <div class="case__shot" aria-hidden="true">
-            <div class="phone"><i class="w"></i><i class="c"></i><i class="c"></i><i></i><i class="w"></i><i class="b"></i></div>
+          <div class="case__shot shot--food" aria-label="Макеты: главный экран и корзина приложения доставки">
+            <figure class="shot">
+              <div class="dev"><div class="scr food">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <div class="f-head">
+                  <div><small>Доставка на</small><strong>ул. Садовая, 12 <span class="caret"></span></strong></div>
+                  <span class="ava">А</span>
+                </div>
+                <div class="f-search"><span class="ic-search"></span>Блюда и рестораны</div>
+                <div class="f-repeat">
+                  <div class="f-repeat__top"><small>Ваш прошлый заказ</small><b>Пиццерия «Марко»</b></div>
+                  <div class="f-repeat__items"><span class="dish d1"></span><span class="dish d2"></span><span class="dish d3"></span><em>Пепперони, Цезарь, морс</em></div>
+                  <div class="f-repeat__bottom"><b>1 240 ₽</b><span class="f-btn">Повторить</span></div>
+                </div>
+                <div class="f-cats">
+                  <span><i class="c1"></i>Пицца</span><span><i class="c2"></i>Суши</span><span><i class="c3"></i>Бургеры</span><span><i class="c4"></i>Супы</span>
+                </div>
+                <div class="f-sec">Рядом с вами</div>
+                <div class="f-rest">
+                  <div class="f-rest__img"><span class="f-badge">−20%</span></div>
+                  <div class="f-rest__row"><b>Суши Мастер</b><span>★ 4,8</span></div>
+                  <small>25–35 мин · доставка 99 ₽</small>
+                </div>
+                <nav class="tabs"><span class="on"><i></i>Главная</span><span><i></i>Поиск</span><span><i></i>Заказы</span><span><i></i>Профиль</span></nav>
+              </div></div>
+              <figcaption>Главная · быстрый повтор</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="dev"><div class="scr food">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <div class="f-title"><span class="back"></span>Корзина<small>3 товара</small></div>
+                <div class="f-item"><span class="dish d1"></span><div><b>Пепперони 30 см</b><small>650 ₽</small></div><span class="step"><i>−</i>1<i>+</i></span></div>
+                <div class="f-item"><span class="dish d2"></span><div><b>Цезарь с курицей</b><small>340 ₽</small></div><span class="step"><i>−</i>1<i>+</i></span></div>
+                <div class="f-item"><span class="dish d3"></span><div><b>Морс клюквенный</b><small>100 ₽</small></div><span class="step"><i>−</i>1<i>+</i></span></div>
+                <div class="f-eta"><b>Доставим за 30–40 мин</b><span class="bar"><i></i></span><small>Курьер уже рядом с рестораном</small></div>
+                <div class="f-promo">Промокод<span>Применить</span></div>
+                <dl class="f-sum">
+                  <div><dt>Товары</dt><dd>1 090 ₽</dd></div>
+                  <div><dt>Доставка</dt><dd>150 ₽</dd></div>
+                  <div class="tot"><dt>Итого</dt><dd>1 240 ₽</dd></div>
+                </dl>
+                <span class="f-pay">Оплатить 1 240 ₽</span>
+              </div></div>
+              <figcaption>Корзина · 3 шага до оплаты</figcaption>
+            </figure>
           </div>
           <div class="case__text">
             <span class="case__tag">Пример · мобильное приложение</span>
             <h3>Приложение доставки еды: быстрый повторный заказ</h3>
             <dl>
               <div><dt>Задача</dt><dd>Пользователи часто заказывают одно и то же, но каждый раз проходят весь путь заново.</dd></div>
-              <div><dt>Что сделал</dt><dd>Опросил 5 знакомых, нарисовал user flow, добавил блок «Повторить заказ» на главный экран.</dd></div>
+              <div><dt>Что сделал</dt><dd>Опросил 5 знакомых, нарисовал user flow, вынес карточку «Повторить заказ» на главный экран и упростил корзину.</dd></div>
               <div><dt>Результат</dt><dd>Путь до оплаты сократился с 7 шагов до 3 в кликабельном прототипе.</dd></div>
             </dl>
             <ul class="tags"><li>Исследование</li><li>User flow</li><li>Прототип</li></ul>
           </div>
         </article>
+
         <article class="case">
-          <div class="case__shot" aria-hidden="true">
-            <div class="phone phone--web"><i></i><i class="c"></i><i class="c"></i><i class="w"></i><i class="b"></i></div>
+          <div class="case__shot shot--coffee" aria-label="Макеты: десктопная и мобильная версия лендинга кофейни">
+            <figure class="shot shot--wide">
+              <div class="browser">
+                <div class="browser__bar"><i></i><i></i><i></i><span>zerno.coffee</span></div>
+                <div class="scr cof cof--desk">
+                  <header class="c-nav"><b class="c-logo"><span></span>Зерно</b><span>Меню</span><span>О нас</span><span>Контакты</span><span class="c-btn">Заказать с собой</span></header>
+                  <div class="c-hero">
+                    <div class="c-hero__text">
+                      <small>Кофейня на Лесной, 8</small>
+                      <h4>Кофе, ради которого стоит выйти из дома</h4>
+                      <p>Обжариваем зерно сами каждую неделю. Завтраки до 12:00, десерты и тихие столики для работы.</p>
+                      <div class="c-ctas"><span class="c-btn">Посмотреть меню</span><span class="c-btn c-btn--line">Как добраться</span></div>
+                    </div>
+                    <div class="c-art"><span class="saucer"></span><span class="cup"><i></i></span><span class="steam"></span></div>
+                  </div>
+                  <div class="c-info">
+                    <div><small>Адрес</small><b>ул. Лесная, 8</b></div>
+                    <div><small>Открыто</small><b>Ежедневно 8:00–22:00</b></div>
+                    <div><small>Капучино</small><b>от 190 ₽</b></div>
+                  </div>
+                </div>
+              </div>
+              <figcaption>Десктоп · 1440</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="dev"><div class="scr cof">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <header class="c-nav"><b class="c-logo"><span></span>Зерно</b><span class="burger"></span></header>
+                <div class="c-art c-art--m"><span class="saucer"></span><span class="cup"><i></i></span><span class="steam"></span></div>
+                <div class="c-hero__text">
+                  <small>Кофейня на Лесной, 8</small>
+                  <h4>Кофе, ради которого стоит выйти из дома</h4>
+                  <span class="c-btn c-btn--full">Посмотреть меню</span>
+                </div>
+                <div class="c-menu">
+                  <div><span class="c-dot"></span>Капучино<em>190 ₽</em></div>
+                  <div><span class="c-dot c-dot--2"></span>Флэт уайт<em>220 ₽</em></div>
+                  <div><span class="c-dot c-dot--3"></span>Сырники со сметаной<em>290 ₽</em></div>
+                </div>
+                <div class="c-info c-info--m">
+                  <div><small>Открыто сейчас</small><b>до 22:00</b></div>
+                  <div><small>Адрес</small><b>ул. Лесная, 8</b></div>
+                </div>
+              </div></div>
+              <figcaption>Мобильная · 375</figcaption>
+            </figure>
           </div>
           <div class="case__text">
             <span class="case__tag">Пример · лендинг</span>
@@ -469,21 +709,67 @@ footer { padding-block: 0 40px; text-align: center; }
             <dl>
               <div><dt>Задача</dt><dd>У кофейни есть только страница в соцсети: не видно меню, адреса и часов работы.</dd></div>
               <div><dt>Что сделал</dt><dd>Собрал структуру по вопросам гостей, сделал дизайн для десктопа и телефона, UI-кит из 12 компонентов.</dd></div>
-              <div><dt>Результат</dt><dd>Вся ключевая информация видна на первом экране телефона.</dd></div>
+              <div><dt>Результат</dt><dd>Адрес, часы работы и меню видны на первом экране телефона.</dd></div>
             </dl>
             <ul class="tags"><li>UI</li><li>Адаптив</li><li>UI-кит</li></ul>
           </div>
         </article>
+
         <article class="case">
-          <div class="case__shot" aria-hidden="true">
-            <div class="phone"><i class="w"></i><i></i><i></i><i></i><i class="c"></i><i class="b"></i></div>
+          <div class="case__shot shot--habit" aria-label="Макеты: экран статистики трекера привычек до и после редизайна">
+            <figure class="shot">
+              <div class="dev"><div class="scr hab hab--old">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <div class="o-title">HABITS <span>⋮</span></div>
+                <div class="o-tabs"><span class="on">Список</span><span>Календарь</span><span>Статистика</span><span>Ещё</span></div>
+                <div class="o-row o-row--h"><span></span><i>П</i><i>В</i><i>С</i><i>Ч</i><i>П</i><i>С</i><i>В</i></div>
+                <div class="o-row"><span>Вода 2 л</span><i class="x"></i><i class="x"></i><i></i><i class="x"></i><i></i><i class="x"></i><i></i></div>
+                <div class="o-row"><span>Чтение 20 мин</span><i class="x"></i><i></i><i class="x"></i><i class="x"></i><i class="x"></i><i></i><i></i></div>
+                <div class="o-row"><span>Зарядка</span><i></i><i class="x"></i><i class="x"></i><i></i><i class="x"></i><i class="x"></i><i></i></div>
+                <div class="o-row"><span>Без сахара</span><i class="x"></i><i class="x"></i><i></i><i></i><i class="x"></i><i></i><i></i></div>
+                <div class="o-row"><span>Сон до 23:00</span><i></i><i></i><i class="x"></i><i class="x"></i><i></i><i class="x"></i><i></i></div>
+                <div class="o-row"><span>Английский</span><i class="x"></i><i></i><i></i><i class="x"></i><i class="x"></i><i></i><i></i></div>
+                <p class="o-note">Всего выполнено: 23/49 (46,9%). Лучшая серия: 4. Текущая серия: 1. Средн. в день: 3,28</p>
+                <span class="o-fab">+</span>
+              </div></div>
+              <figcaption class="cap-old">До · прогресс спрятан в таблице</figcaption>
+            </figure>
+            <figure class="shot">
+              <div class="dev"><div class="scr hab">
+                <div class="sb"><b>9:41</b><span class="sb__i"></span></div>
+                <div class="h-head"><div><small>13–19 октября</small><strong>Эта неделя</strong></div><span class="h-chip">Неделя ▾</span></div>
+                <div class="h-sum">
+                  <div class="ring" style="--p:.71"><b>71%</b></div>
+                  <div><b>35 из 49</b><small>отметок выполнено</small><span class="h-up">+12% к прошлой неделе</span></div>
+                </div>
+                <div class="h-chart">
+                  <div style="--h:.57"><i></i><small>Пн</small></div>
+                  <div style="--h:.86"><i></i><small>Вт</small></div>
+                  <div style="--h:.71"><i></i><small>Ср</small></div>
+                  <div style="--h:1"><i></i><small>Чт</small></div>
+                  <div style="--h:.43"><i></i><small>Пт</small></div>
+                  <div style="--h:.71"><i></i><small>Сб</small></div>
+                  <div class="today" style="--h:.86"><i></i><small>Вс</small></div>
+                </div>
+                <div class="h-streak"><span class="flame"></span><div><b>Серия 12 дней</b><small>Вода 2 л — лучший результат</small></div></div>
+                <div class="h-list">
+                  <div><span class="chk on"></span>Вода 2 л<em>7/7</em></div>
+                  <div><span class="chk on"></span>Чтение 20 мин<em>6/7</em></div>
+                  <div><span class="chk"></span>Зарядка<em>4/7</em></div>
+                  <div><span class="chk on"></span>Сон до 23:00<em>5/7</em></div>
+                  <div><span class="chk"></span>Английский<em>3/7</em></div>
+                </div>
+                <nav class="tabs hab-tabs"><span><i></i>Сегодня</span><span class="on"><i></i>Прогресс</span><span><i></i>Привычки</span><span><i></i>Профиль</span></nav>
+              </div></div>
+              <figcaption>После · прогресс за 1 взгляд</figcaption>
+            </figure>
           </div>
           <div class="case__text">
             <span class="case__tag">Пример · редизайн</span>
             <h3>Редизайн трекера привычек</h3>
             <dl>
-              <div><dt>Задача</dt><dd>В оригинальном приложении трудно понять прогресс за неделю.</dd></div>
-              <div><dt>Что сделал</dt><dd>Провёл UX-аудит по 10 эвристикам Нильсена, переделал экран статистики и онбординг.</dd></div>
+              <div><dt>Задача</dt><dd>В оригинальном приложении прогресс за неделю спрятан в таблице и строке мелких цифр.</dd></div>
+              <div><dt>Что сделал</dt><dd>Провёл UX-аудит по 10 эвристикам Нильсена, вынес итог недели наверх, добавил график по дням и серию.</dd></div>
               <div><dt>Результат</dt><dd>3 из 4 тестировщиков нашли недельный прогресс меньше чем за 10 секунд.</dd></div>
             </dl>
             <ul class="tags"><li>UX-аудит</li><li>Редизайн</li><li>Тестирование</li></ul>
